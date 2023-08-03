@@ -1,33 +1,28 @@
-import { TSettingRenderData } from '@/app/setting';
+import { TSettingRenderItemInfo } from '@/app/(drawer)/configuracoes';
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import { OpenText } from '../shared/StyledText';
-import { View } from '../shared';
-import { MaterialIcon } from '../shared';
+import { Link } from 'expo-router';
+import { MaterialIcon, OpenText, View } from '../shared';
+import { ENamesPages } from '@/constants/ENamesPages';
 
-
-interface IProps {
-	data:TSettingRenderData
-	onPress:(data:TSettingRenderData) => void
-}
-
-export function SectionItem({data,onPress}:IProps) {
-	const isFirstItem=data.index === 0;
-	const isLastItem= data.index === data.section.data.length - 1;
+export function SectionItem({index,item,section}:TSettingRenderItemInfo) {
+	const isFirstItem= index === 0;
+	const isLastItem= index === section.data.length - 1;
 	
-	return (
-		<>
-			<TouchableOpacity activeOpacity={0.85} onPress={() => onPress(data)}>
+	return (		
+		<Link href={item.screen || `/(drawer)/${ENamesPages.paginaInicial}`}asChild>
+			<TouchableOpacity activeOpacity={0.85}>
 				<View style={[
 					styles.container,
 					isFirstItem ? styles.firstItem : undefined,
 					isLastItem ? styles.lastItem : undefined,
 				]} lightColor='#ccc' darkColor='#262626'>
-					<OpenText numberOfLines={1} style={styles.text}>{data.item}</OpenText>
-					<MaterialIcon name='chevron-right' size={30} />		
+					<OpenText numberOfLines={1} style={styles.text}> {item.titleOption} </OpenText>
+					<MaterialIcon name='chevron-right' size={30}  />		
 				</View>
 			</TouchableOpacity>
-		</>
+		</Link>
+		
 	);
 }
 
@@ -43,6 +38,7 @@ const styles = StyleSheet.create({
 	},
 	text:{
 		fontSize:18,
+		marginLeft:25,
 		fontWeight:'bold',
 		textTransform:'capitalize'	
 	},

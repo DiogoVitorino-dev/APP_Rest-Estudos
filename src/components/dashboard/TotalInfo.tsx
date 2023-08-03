@@ -1,5 +1,4 @@
-import { OpenText } from '@/components/shared/StyledText';
-import { View } from '@/components/Themed';
+import { View, OpenText } from '@/components/shared';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 

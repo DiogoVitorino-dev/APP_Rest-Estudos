@@ -1,16 +1,17 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
-import { useEffect } from 'react';
+import { Slot, SplashScreen } from 'expo-router';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useColorScheme } from 'react-native';
+import { useEffect } from 'react';
+import { AuthProvider } from '@/contexts/Auth';
 
 export {
 	ErrorBoundary,
 } from 'expo-router';
 
 export const unstable_settings = {
-	initialRouteName: '(tabs)',
+	initialRouteName: 'entrar',
 };
 
 SplashScreen.preventAutoHideAsync();
@@ -34,22 +35,19 @@ export default function RootLayout() {
 	if (!loaded) {
 		return null;
 	}
-
-  
+	
 	return <RootLayoutNav />;
 }
 
 
-function RootLayoutNav() {
+function RootLayoutNav(){
 	const colorScheme = useColorScheme();
-
 	return (
 		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-			<Stack>
-				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-				<Stack.Screen name="setting" options={{ headerShown: false }} />
-				<Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-			</Stack>
+			<AuthProvider>
+				<Slot />			
+			</AuthProvider>
 		</ThemeProvider>
 	);
+
 }

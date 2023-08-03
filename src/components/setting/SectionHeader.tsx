@@ -1,16 +1,14 @@
-import { TSettingRenderData } from '@/app/setting';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import { OpenText } from '../shared/StyledText';
 import { View } from '../shared';
+import { TSettingRenderSectionHeader } from '@/app/(drawer)/configuracoes';
 
-export function SectionHeader(
-	{section}:Omit<TSettingRenderData, 'index' | 'item' | 'separators'>
-) {
+export function SectionHeader({section}:TSettingRenderSectionHeader) {
 	return (
 		<View style={styles.container}>
 			{section.icon}
-			<OpenText style={styles.title}>{section.title}</OpenText>    
+			<OpenText style={[styles.title]}>{section.title}</OpenText>    
 		</View>
 	);
 };
@@ -19,13 +17,13 @@ const styles = StyleSheet.create({
 	container:{
 		flexDirection:'row',				
 		alignItems:'center',
-		borderBottomWidth:StyleSheet.hairlineWidth
+		borderBottomWidth:2
 	},
     
 	title:{
 		fontSize:26,
 		textTransform:'capitalize',
 		fontWeight:'bold',
-		marginHorizontal:5
+		margin:5
 	},
 });

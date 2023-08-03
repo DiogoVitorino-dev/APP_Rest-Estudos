@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { View } from '@/components/shared';
 import TotalInfo from '@/components/dashboard/TotalInfo';
 
-export default function DashBoard() {
+export default function PaginaInicial() {
 	return (
 		<View style={styles.container}>
 			<TotalInfo title='Total de pessoas' info='0' />

@@ -1,6 +1,6 @@
-import Colors from '@/constants/Colors';
+import Colors  from '@/constants/Colors';
 import { TMaterialIconNames } from '@/constants/Types';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { OpaqueColorValue, StyleProp, TextStyle, useColorScheme } from 'react-native';
 
@@ -13,11 +13,12 @@ interface IProps {
 
 export function MaterialIcon({name, color, size, style}:IProps) {
 	const colorScheme = useColorScheme();
+	
 	return (
-		<MaterialCommunityIcons
+		<MaterialIcons
 			name={name}
 			size={size || 25}
-			color={color || Colors['dark' ?? colorScheme].tabIconDefault}
+			color={color || Colors[colorScheme || 'dark'].iconDefault}
 			style={style}
 		/>
 	);
