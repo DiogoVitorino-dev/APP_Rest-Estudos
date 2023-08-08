@@ -1,9 +1,9 @@
 import { HeaderGoBack } from '@/components/shared';
 import Colors  from '@/constants/Colors';
 import { ELabelsPages } from '@/constants/ELabelsPages';
+import { useTheme } from '@react-navigation/native';
 import { Stack, useNavigation } from 'expo-router';
 import { useLayoutEffect } from 'react';
-import { useColorScheme } from 'react-native';
 
 const headerLeft = () => (
 	<HeaderGoBack		 
@@ -13,7 +13,7 @@ const headerLeft = () => (
 );
 
 export default function CidadesLayout() {
-	const colorScheme = useColorScheme();
+	const theme = useTheme();
 	const navigation = useNavigation();
 
 	useLayoutEffect(()=>{
@@ -29,7 +29,7 @@ export default function CidadesLayout() {
 				options={{
 					title: ELabelsPages.cidades,
 					headerLeft,														
-					headerTintColor: Colors[colorScheme || 'dark'].text,
+					headerTintColor: Colors[theme.dark ? 'dark' : 'light'].text,
 				}}
 			/>			
 		</Stack>

@@ -1,34 +1,38 @@
+import { SignIn } from '@/components/auth';
 import { View } from '@/components/shared';
-import Colors from '@/constants/Colors';
-import { ENamesPages } from '@/constants/ENamesPages';
-import { useAuth } from '@/contexts/Auth';
-import { useRouter } from 'expo-router';
-import { Button, StyleSheet, TextInput, useColorScheme } from 'react-native';
+import { SignInProvider } from '@/contexts/Auth';
+import { useAuth } from '@/contexts/Auth/Auth';
+import { IUser } from '@/models';
+import { StyleSheet } from 'react-native';
 
-export default function Entrar() {
-	const colorScheme = useColorScheme();
-	const router = useRouter();
-	const navigateToSignUp = () => router.push(`/${ENamesPages.cadastrar}`);
+export default function Entrar() {	
+	
 	const {signIn} = useAuth();
+
+	const handlePressLogin = (user:Omit<IUser,'username'>) => {
+		signIn(user);
+	};
 	
  	return (
-		<View style={styles.container}>
-			<TextInput 
-				placeholder='E-mail' 
-				placeholderTextColor={Colors[colorScheme || 'dark'].text} />
-			<TextInput 
-				placeholder='Senha' 
-				placeholderTextColor={Colors[colorScheme || 'dark'].text}/>
-			<View>
-				<Button title='Entrar' onPress={() => signIn({email:'',nome:'a',senha:''})} />
-				<Button title='Cadastrar' onPress={navigateToSignUp} />
+		<SignInProvider>
+			<View style={styles.container}>
+				<SignIn onPressLogin={handlePressLogin} isLoading />			
 			</View>
-		</View>
+		</SignInProvider>
 	);
 }
 
 const styles = StyleSheet.create({
 	container:{
-		flex:1
+		flex:1,
+		flexDirection:'column',
+		justifyContent:'center',		
+		width:'100%',
+		margin:'auto',
+		padding:15
+	},
+	
+	header:{	
+		fontSize:26
 	}
 });

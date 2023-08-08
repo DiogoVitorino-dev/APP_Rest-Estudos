@@ -4,6 +4,7 @@ export enum ENamesPages {
 	pessoas='pessoas',
 	configuracoes='configuracoes',
 	sobre='sobre',
+	temas='temas',
 	entrar='entrar',
 	cadastrar='cadastrar'
 }

@@ -2,8 +2,9 @@ export enum ELabelsPages {
 	paginaInicial='Pagina Inicial',
 	cidades='Cidades',
 	pessoas='Pessoas',
-	configuracoes='Configuracões',
+	configuracoes='Configurações',
 	sobre='Sobre',
+	temas='Temas',
 	entrar='Entrar',
 	cadastrar='Cadastrar'
 }

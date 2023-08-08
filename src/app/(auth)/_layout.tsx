@@ -10,8 +10,8 @@ export default function AuthLayout() {
 				options={{title: ELabelsPages.entrar,headerShown:false}}
 			/>
 			<Stack.Screen 
-				name={ENamesPages.cadastrar}
-				options={{title: ELabelsPages.cadastrar}}
+				name={ENamesPages.cadastrar}				
+				options={{title: ELabelsPages.cadastrar,headerTitle:'Voltar'}}
 			/>
 		</Stack>
 	);

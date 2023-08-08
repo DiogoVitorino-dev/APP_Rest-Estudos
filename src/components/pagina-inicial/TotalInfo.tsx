@@ -1,4 +1,4 @@
-import { View, OpenText } from '@/components/shared';
+import { OpenText, StyledView } from '@/components/shared';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
@@ -9,10 +9,14 @@ interface IProps {
 
 export default function TotalInfo({title,info}:IProps) {
 	return (
-		<View style={styles.container}>
-			<OpenText numberOfLines={3} adjustsFontSizeToFit style={styles.text}>{title}</OpenText>
-			<OpenText numberOfLines={1} adjustsFontSizeToFit style={[styles.text,styles.info]}>{info}</OpenText>
-		</View>
+		<StyledView style={styles.container}>
+			<OpenText numberOfLines={3} adjustsFontSizeToFit style={styles.text}>
+				{title}
+			</OpenText>
+			<OpenText numberOfLines={1} adjustsFontSizeToFit style={[styles.text,styles.info]}>
+				{info}
+			</OpenText>
+		</StyledView>
 	);
 };
 
@@ -26,19 +30,14 @@ const styles = StyleSheet.create({
 		padding:5,
 		flexDirection:'column',        
 		justifyContent:'center',
-		alignItems:'center',
-		borderRadius:5,
-		borderWidth:StyleSheet.hairlineWidth,
-		shadowColor:'rgba(0,0,0,0.1)',
-		shadowRadius:10,
-		shadowOffset:{width:3,height:3},
-		elevation:5
+		alignItems:'center',		
 	},
 
 	text: {         
 		fontSize:26,
 		width:'100%',
-		textAlign:'center',      
+		textAlign:'center',
+		userSelect:'text'
 	},
     
 	info: {         

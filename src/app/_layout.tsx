@@ -5,6 +5,7 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useColorScheme } from 'react-native';
 import { useEffect } from 'react';
 import { AuthProvider } from '@/contexts/Auth';
+import { PaperProvider } from 'react-native-paper';
 
 export {
 	ErrorBoundary,
@@ -45,7 +46,9 @@ function RootLayoutNav(){
 	return (
 		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
 			<AuthProvider>
-				<Slot />			
+				<PaperProvider>
+					<Slot />
+				</PaperProvider>		
 			</AuthProvider>
 		</ThemeProvider>
 	);

@@ -4,7 +4,7 @@ import { router, useSegments } from 'expo-router';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 interface IAuthContext {
-	signIn: (user:IUser) => void,
+	signIn: (user:Omit<IUser,'username'>) => void,
 	signOut: () => void,
 	user:null | IUser
 }
@@ -44,14 +44,14 @@ function useProtectedRoute(user) {
 }
 
 export function AuthProvider(props) {
-	const [user, setAuth] = useState<IUser | null>(null);
+	const [user, setAuth] = useState<Omit<IUser,'username'> | null>(null);
 
 	useProtectedRoute(user);
 
 	return (
 		<AuthContext.Provider
 			value={{
-				signIn: (user:IUser) => setAuth(user),
+				signIn: (user:Omit<IUser,'username'>) => setAuth(user),
 				signOut: () => setAuth(null),
 				user,
 			}}>

@@ -1,10 +1,10 @@
 import { View } from '@/components/shared';
-import { SectionHeader } from '@/components/setting';
+import { SectionHeader } from '@/components/configuracoes';
 import { MaterialIcon } from '@/components/shared';
 
 import { Platform, SectionList, SectionListRenderItemInfo, StyleSheet } from 'react-native';
 import { Href } from 'expo-router';
-import RenderSectionItem from '@/components/setting/RenderSectionItem';
+import RenderSectionItem from '@/components/configuracoes/RenderSectionItem';
 import Colors  from '@/constants/Colors';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { ELabelsPages } from '@/constants/ELabelsPages';
@@ -15,8 +15,9 @@ export interface ISettingsData {
   data: TSettingsData[]
 }
 
-type TSettingsData = {
-	titleOption:string
+export type TSettingsData = {
+	title:string
+	subTitle?:string
 	screen?:Href<string>
 }
 
@@ -38,11 +39,18 @@ const settingsData:ISettingsData[] = [
 				color={Colors['icon'].brush}				
 			/>
 		) ,
-		data: [{titleOption:'Tema'}],
+		data: [{
+			title:ELabelsPages.temas,
+			subTitle:'Alterne para tema claro ou escuro.',
+			screen:`/${ENamesPages.configuracoes}/${ENamesPages.temas}`
+		}],
 	},
 	{
 		title: '',		
-		data: [{titleOption:ELabelsPages.sobre,screen:`/setting/${ENamesPages.sobre}`}],
+		data: [{
+			title:ELabelsPages.sobre,			
+			screen:`/${ENamesPages.configuracoes}/${ENamesPages.sobre}`
+		}],
 	},
 ];
 
@@ -53,12 +61,12 @@ export default function Configuration() {
 		<View>
 			<SectionList	
 				sections={settingsData}
-				style={styles.list}
+				style={styles.list}				
 				showsVerticalScrollIndicator={Platform.OS === 'web'}
 				bounces={false}
 				onEndReachedThreshold={0.5}
 				SectionSeparatorComponent={SectionSeparatorComponent}			
-				keyExtractor={(it) => it.titleOption}			
+				keyExtractor={(it) => it.title}			
 				renderSectionHeader={
 					(section:TSettingRenderSectionHeader) => <SectionHeader {...section} />
 				}
@@ -73,8 +81,9 @@ export default function Configuration() {
 const styles = StyleSheet.create({
 	list:{
 		flex: 1, 
-		width: '100%',
-		maxWidth:500,		 
-		padding:15
-	}
+		width: '100%',		
+		maxWidth:864,			 
+		paddingHorizontal:50,
+		marginVertical:15
+	},
 });

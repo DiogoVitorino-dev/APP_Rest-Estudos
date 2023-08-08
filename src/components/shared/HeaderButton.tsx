@@ -1,27 +1,19 @@
-import Colors  from '@/constants/Colors';
 import { Href, Link } from 'expo-router';
 import React from 'react';
-import {Pressable, StyleProp, TextStyle, useColorScheme} from 'react-native';
-import { MaterialIcon } from './MaterialIcon';
-import { TMaterialIconNames } from '@/constants/Types';
-
+import {Pressable, StyleProp, TextStyle} from 'react-native';
+import { IMaterialIconProps, MaterialIcon } from './MaterialIcon';
 interface IProps {
     href: Href<string>
-    iconName: TMaterialIconNames
-		color?:string
-    size?:number
+    icon:IMaterialIconProps
 		style?:StyleProp<TextStyle>
 }
-export function HeaderButton({href,iconName,size,style}:IProps) {
-	const colorScheme = useColorScheme();
+export function HeaderButton({href,icon,style}:IProps) {
 	return (
 		<Link href={href} asChild style={style}>
 			<Pressable>
 				{({ pressed }) => (
 					<MaterialIcon
-						name={iconName}
-						size={size}
-						color={Colors[colorScheme || 'dark'].text}
+						{...icon}
 						style={{ opacity: pressed ? 0.5 : 1 }}
 					/>
 				)}

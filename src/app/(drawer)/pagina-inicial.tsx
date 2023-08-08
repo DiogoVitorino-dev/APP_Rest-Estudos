@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { View } from '@/components/shared';
-import TotalInfo from '@/components/dashboard/TotalInfo';
+import TotalInfo from '@/components/pagina-inicial/TotalInfo';
 
 export default function PaginaInicial() {
 	return (
@@ -17,6 +17,6 @@ const styles = StyleSheet.create({
 		width:'100%',    
 		flexDirection:'row',
 		flexWrap:'wrap',    
-		justifyContent:'center'    
+		justifyContent:'center', 
 	},
 });

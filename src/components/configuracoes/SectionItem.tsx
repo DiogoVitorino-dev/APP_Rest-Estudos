@@ -1,14 +1,20 @@
-import { TSettingRenderItemInfo } from '@/app/(drawer)/configuracoes';
+import { TSettingsData } from '@/app/(drawer)/configuracoes';
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import { Link } from 'expo-router';
 import { MaterialIcon, OpenText, View } from '../shared';
 import { ENamesPages } from '@/constants/ENamesPages';
 
-export function SectionItem({index,item,section}:TSettingRenderItemInfo) {
-	const isFirstItem= index === 0;
-	const isLastItem= index === section.data.length - 1;
-	
+interface IProps {
+	item:TSettingsData
+	isFirstItem:boolean
+	isLastItem:boolean
+}
+
+const lightColor = '#ccc';
+const darkColor = '#262626';
+
+export function SectionItem({item,isFirstItem,isLastItem}:IProps) {
 	return (		
 		<Link href={item.screen || `/(drawer)/${ENamesPages.paginaInicial}`}asChild>
 			<TouchableOpacity activeOpacity={0.85}>
@@ -16,8 +22,15 @@ export function SectionItem({index,item,section}:TSettingRenderItemInfo) {
 					styles.container,
 					isFirstItem ? styles.firstItem : undefined,
 					isLastItem ? styles.lastItem : undefined,
-				]} lightColor='#ccc' darkColor='#262626'>
-					<OpenText numberOfLines={1} style={styles.text}> {item.titleOption} </OpenText>
+				]} lightColor={lightColor} darkColor={darkColor}>
+					<View lightColor={lightColor} darkColor={darkColor}>
+						<OpenText numberOfLines={1} style={styles.text}> 
+							{item.title} 
+						</OpenText>
+						<OpenText numberOfLines={1} style={[styles.text,styles.subTitle]}> 
+							{item.subTitle} 
+						</OpenText>
+					</View>					
 					<MaterialIcon name='chevron-right' size={30}  />		
 				</View>
 			</TouchableOpacity>
@@ -28,19 +41,24 @@ export function SectionItem({index,item,section}:TSettingRenderItemInfo) {
 
 const styles = StyleSheet.create({
 	container:{		
-		minHeight:50,		      
-		maxWidth:500,
+		minHeight:50,
 		height:60,		  
-		paddingHorizontal:10, 
+		paddingHorizontal:30,		
 		flexDirection:'row',
 		alignItems:'center',
 		justifyContent:'space-between'	
 	},
 	text:{
 		fontSize:18,
-		marginLeft:25,
+		marginVertical:2,		
 		fontWeight:'bold',
 		textTransform:'capitalize'	
+	},
+	subTitle:{
+		fontSize:12,		
+		fontWeight:'normal',
+		opacity:0.7,
+		textTransform:'none'
 	},
 	firstItem:{
 		borderTopEndRadius:20,

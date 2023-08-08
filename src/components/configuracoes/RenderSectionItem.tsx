@@ -2,11 +2,14 @@ import { TSettingRenderItemInfo } from '@/app/(drawer)/configuracoes';
 import { SectionItem } from './SectionItem';
 
 export default function RenderSectionItem(data:TSettingRenderItemInfo) {
-
-	if(!data.item.screen)
-		console.log('item Diferenciado');
+	const isFirstItem= data.index === 0;
+	const isLastItem= data.index === data.section.data.length - 1;
 
 	return (
-		<SectionItem {...data} />
+		<SectionItem 
+			item={data.item}
+			isFirstItem={isFirstItem} 
+			isLastItem={isLastItem}
+		/>
 	);
 }
