@@ -1,5 +1,5 @@
 import { RadioItem } from '@/components/configuracoes';
-import { View } from '@/components/shared';
+import { View } from '@/shared/components';
 import React from 'react';
 import { Appearance, Platform, StyleSheet } from 'react-native';
 

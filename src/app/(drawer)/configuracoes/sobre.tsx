@@ -1,4 +1,4 @@
-import { View } from '@/components/shared';
+import { View } from '@/shared/components';
 import React from 'react';
 import {Image} from 'react-native';
 

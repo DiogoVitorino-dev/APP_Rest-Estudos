@@ -1,7 +1,7 @@
 import { Link, Stack } from 'expo-router';
 import { StyleSheet } from 'react-native';
 
-import { Text, View } from '@/components/shared';
+import { Text, View } from '@/shared/components';
 import { ENamesPages } from '@/constants/ENamesPages';
 
 export default function NotFoundScreen() {

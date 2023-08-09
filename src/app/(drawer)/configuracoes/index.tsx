@@ -1,6 +1,6 @@
-import { View } from '@/components/shared';
+import { View } from '@/shared/components';
 import { SectionHeader } from '@/components/configuracoes';
-import { MaterialIcon } from '@/components/shared';
+import { MaterialIcon } from '@/shared/components';
 
 import { Platform, SectionList, SectionListRenderItemInfo, StyleSheet } from 'react-native';
 import { Href } from 'expo-router';

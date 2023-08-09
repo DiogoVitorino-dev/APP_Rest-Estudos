@@ -1,8 +1,7 @@
 import { IUser } from '@/models';
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
-import '@/services/TranslationYup';
 import * as yup from 'yup';
-import { ValidationYup } from '@/services/ValidationYup';
+import { ValidationYup } from '@/shared/services/ValidationYup';
 
 
 interface ISignInContext {

@@ -1,5 +1,5 @@
 import { SignUp } from '@/components/auth';
-import { View } from '@/components/shared';
+import { View } from '@/shared/components';
 import { SignUpProvider } from '@/contexts/Auth';
 import { IUser } from '@/models';
 import React from 'react';

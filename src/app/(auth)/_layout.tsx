@@ -1,6 +1,7 @@
 import { ELabelsPages } from '@/constants/ELabelsPages';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { Stack } from 'expo-router';
+import '@/shared/services/TranslationYup';
 
 export default function AuthLayout() {	
 	return (

@@ -2,7 +2,7 @@ import { TSettingsData } from '@/app/(drawer)/configuracoes';
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import { Link } from 'expo-router';
-import { MaterialIcon, OpenText, View } from '../shared';
+import { MaterialIcon, OpenText, StyledView, View } from '@/shared/components';
 import { ENamesPages } from '@/constants/ENamesPages';
 
 interface IProps {
@@ -18,7 +18,7 @@ export function SectionItem({item,isFirstItem,isLastItem}:IProps) {
 	return (		
 		<Link href={item.screen || `/(drawer)/${ENamesPages.paginaInicial}`}asChild>
 			<TouchableOpacity activeOpacity={0.85}>
-				<View style={[
+				<StyledView style={[
 					styles.container,
 					isFirstItem ? styles.firstItem : undefined,
 					isLastItem ? styles.lastItem : undefined,
@@ -32,7 +32,7 @@ export function SectionItem({item,isFirstItem,isLastItem}:IProps) {
 						</OpenText>
 					</View>					
 					<MaterialIcon name='chevron-right' size={30}  />		
-				</View>
+				</StyledView>
 			</TouchableOpacity>
 		</Link>
 		

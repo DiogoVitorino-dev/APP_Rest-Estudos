@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { View } from '@/components/shared';
+import { View } from '@/shared/components';
 import TotalInfo from '@/components/pagina-inicial/TotalInfo';
 
 export default function PaginaInicial() {

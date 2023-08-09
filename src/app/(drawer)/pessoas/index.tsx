@@ -1,4 +1,4 @@
-import { View } from '@/components/shared';
+import { View } from '@/shared/components';
 import {  StyleSheet } from 'react-native';
 
 export default function Pessoas() {

@@ -1,5 +1,5 @@
 import { SignIn } from '@/components/auth';
-import { View } from '@/components/shared';
+import { View } from '@/shared/components';
 import { SignInProvider } from '@/contexts/Auth';
 import { useAuth } from '@/contexts/Auth/Auth';
 import { IUser } from '@/models';

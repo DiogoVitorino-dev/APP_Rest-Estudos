@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import { OpenText } from '../shared/StyledText';
-import { View } from '../shared';
+import { OpenText } from '@/shared/components/StyledText';
+import { View } from '@/shared/components';
 import { TSettingRenderSectionHeader } from '@/app/(drawer)/configuracoes';
 
 export function SectionHeader({section}:TSettingRenderSectionHeader) {

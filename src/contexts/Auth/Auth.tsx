@@ -44,7 +44,7 @@ function useProtectedRoute(user) {
 }
 
 export function AuthProvider(props) {
-	const [user, setAuth] = useState<Omit<IUser,'username'> | null>(null);
+	const [user, setAuth] = useState<Omit<IUser,'username'> | null>({email:'a',password:'a'});
 
 	useProtectedRoute(user);
 

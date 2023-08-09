@@ -1,6 +1,6 @@
 import { Drawer } from 'expo-router/drawer';
 
-import { HeaderButton } from '@/components/shared';
+import { HeaderButton } from '@/shared/components';
 import { Platform, useWindowDimensions } from 'react-native';
 import Colors  from '@/constants/Colors';
 import { ENamesPages } from '@/constants/ENamesPages';

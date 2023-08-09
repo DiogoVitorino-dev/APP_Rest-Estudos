@@ -1,4 +1,4 @@
-import { HeaderGoBack } from '@/components/shared';
+import { HeaderGoBack } from '@/shared/components';
 import Colors  from '@/constants/Colors';
 import { ELabelsPages } from '@/constants/ELabelsPages';
 import { ENamesPages } from '@/constants/ENamesPages';

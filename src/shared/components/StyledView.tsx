@@ -13,15 +13,14 @@ interface IProps {
 
 export function StyledView({children,style,darkColor,lightColor}:IProps) {
 	const theme = useTheme();
+
 	
 	return (
 	 <View 
 			lightColor={lightColor || Colors['light'].backdrop} 
 			darkColor={darkColor || Colors['dark'].backdrop} 
 			style={[styles.container,style,{
-				borderColor:Colors[theme.dark ? 'dark': 'light'].borderColor,
-				borderRadius:10,
-				borderWidth:StyleSheet.hairlineWidth,
+				borderColor:Colors[theme.dark ? 'dark': 'light'].borderColor,				
 			}]}>
 			{children}
 		</View>
@@ -30,7 +29,9 @@ export function StyledView({children,style,darkColor,lightColor}:IProps) {
 
 const styles = StyleSheet.create({
 	container:{				
-		boxShadow:'3px 3px 10px rgba(0,0,0,0.1)',		
+		boxShadow:'3px 3px 10px rgba(0,0,0,0.1)',
+		borderRadius:10,
+		borderWidth:StyleSheet.hairlineWidth,	
 		elevation:5
 	},
 });

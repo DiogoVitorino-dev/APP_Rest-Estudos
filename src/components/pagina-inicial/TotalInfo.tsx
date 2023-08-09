@@ -1,4 +1,4 @@
-import { OpenText, StyledView } from '@/components/shared';
+import { OpenText, StyledView } from '@/shared/components';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 

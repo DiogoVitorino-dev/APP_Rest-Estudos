@@ -29,8 +29,7 @@ export function Button(
 	return (		
 		<ButtonPaper
 			disabled={disabled}			
-			loading={loading}
-			textColor={Colors[theme.dark ? 'dark' : 'light'].text}
+			loading={loading}			
 			style={[{opacity:disabled ? 0.9 : 1},style]}
 			mode={mode || 'text'}
 			rippleColor={
@@ -40,9 +39,9 @@ export function Button(
 			onPress={onPress}
 			icon={()=>icon ? (<MaterialIcon {...icon} />) : null}
 		>		
-			<OpenText style={[styles.title,titleStyle,{
+			<OpenText style={[styles.title,{
 				color: Colors[theme.dark ? 'dark' : 'light'].text
-			}]}>
+			},titleStyle]}>
 				{title}
 			</OpenText>					
 		</ButtonPaper>

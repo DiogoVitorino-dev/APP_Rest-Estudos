@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, ImageSourcePropType, StyleSheet} from 'react-native';
-import { Button, MaterialIcon, OpenText, View } from '../shared';
+import { Button, MaterialIcon, OpenText, View } from '@/shared/components';
 import Colors from '@/constants/Colors';
 import { useTheme } from '@react-navigation/native';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import { StyledView, OpenText, View, Button, LinkText } from '../shared';
+import { StyledView, OpenText, View, Button, LinkText } from '@/shared/components';
 import Colors from '@/constants/Colors';
 import { useTheme } from '@react-navigation/native';
 import { Input } from './Input';
