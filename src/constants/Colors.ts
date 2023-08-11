@@ -14,7 +14,7 @@ export default {
 		backdrop:'#F7F7F7',
 		tint: tintColorLight,
 		warning:'#F23838',
-		button:'#71A0A6',
+		button:'#71A0A640',
 		buttonSelected:'#89C2C9',
 		iconDefault: '#333333',
 		iconSelected: tintColorLight,

@@ -3,13 +3,12 @@ import {StyleSheet} from 'react-native';
 import { StyledView, OpenText, View, Button, LinkText } from '@/shared/components';
 import Colors from '@/constants/Colors';
 import { useTheme } from '@react-navigation/native';
-import { Input } from './Input';
 import { ENamesPages } from '@/constants/ENamesPages';
-import { IUser } from '@/models';
-import { useSignInContext } from '@/contexts/Auth';
+import { TUserSignIn, useSignInContext } from '@/contexts/Auth';
+import { InputEmail, InputPassword } from '../../shared/inputs';
 
 interface IProps {
-	onPressLogin: (user:Omit<IUser,'username'>) => void
+	onPressLogin: (user:TUserSignIn) => void
 	isLoading:boolean
 }
 
@@ -37,34 +36,26 @@ export function SignIn({onPressLogin,isLoading}:IProps) {
 				color:Colors[theme.dark ? 'dark' : 'light'].text
 			}]}>
 				Fazer login
-			</OpenText>			
-			
-			<Input 
-				textInputProps={{
-					placeholder:'E-mail',
-					value:email,
-					textContentType:'emailAddress',
-					onChangeText:text => setEmail(text),
-				}}
-				errorMessage={errorEmail}
-				style={styles.input}
-			/>
+			</OpenText>	
 					
-			<Input 
-				textInputProps={{
-					placeholder:'Senha',
-					secureTextEntry:true,										
-					value:password,
-					onChangeText:text => setPassword(text),												
-				}}
-				errorMessage={errorPassword}
-				style={styles.input}			
+			<InputEmail 
+				onChangeText={(text) => setEmail(text)}
+				value={email}
+				error={errorEmail}
+			/>
+			
+			<InputPassword 
+				onChangeText={(text) => setPassword(text)}
+				value={password}
+				error={errorPassword}
+				showPasswordButtonVisible
 			/>	
 
 			<Button 
 				title='Login'					
 				titleStyle={{fontWeight:'bold'}}
 				style={styles.loginButton}
+				mode='elevated'				
 				disabled={
 					!email || !password
 						? true 
@@ -101,11 +92,6 @@ const styles = StyleSheet.create({
 		width:'100%',
 		margin:'auto',		
 		padding:15,		
-	},
-
-	input:{
-		marginBottom:10,
-		backgroundColor:'transparent'
 	},
 	
 	loginButton:{

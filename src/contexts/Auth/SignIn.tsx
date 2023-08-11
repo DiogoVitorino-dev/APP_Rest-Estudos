@@ -1,10 +1,10 @@
-import { IUser } from '@/models';
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import * as yup from 'yup';
-import { ValidationYup } from '@/shared/services/ValidationYup';
+import { ValidationYup } from '@/shared/services/validation/ValidationYup';
+import { TUserSignIn } from './Auth';
 
 
-interface ISignInContext {
+interface ISignInContext extends TUserSignIn{
 	email:string,
 	setEmail: (text:string) => void
 	errorEmail?:string
@@ -34,7 +34,10 @@ export function useSignInContext() {
 	return useContext(SignInContext);
 }
 
-interface validationObject extends Omit<IUser,'username'> {}
+interface validationObject {
+	email:string
+	password:string
+}
 
 const createValidation:yup.ObjectSchema<validationObject> = yup.object().shape({
 	email: yup.string().email().required().min(5),

@@ -11,7 +11,7 @@ interface IProps {
 	style?:StyleProp<ViewStyle>
 }
 
-export function Input({textInputProps,errorMessage,style}:IProps) {
+export function InputDefault({textInputProps,errorMessage,style}:IProps) {
 	const theme = useTheme();
 	return (
 	 <View style={[styles.transparent, style]}>		
@@ -26,7 +26,7 @@ export function Input({textInputProps,errorMessage,style}:IProps) {
 				textColor={Colors[theme.dark ? 'dark' : 'light'].text}				
 				
 				style={[styles.input,textInputProps?.style,{					
-					backgroundColor:Colors[theme.dark ? 'dark' : 'light'].button + '40',
+					backgroundColor:Colors[theme.dark ? 'dark' : 'light'].button,
 				}]}
 
 				underlineColor={

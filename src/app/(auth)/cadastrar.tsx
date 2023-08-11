@@ -1,21 +1,45 @@
-import { SignUp } from '@/components/auth';
+import { ModalError, SignUp } from '@/components/auth';
 import { View } from '@/shared/components';
-import { SignUpProvider } from '@/contexts/Auth';
-import { IUser } from '@/models';
-import React from 'react';
+import { SignUpProvider, TUserSignUp, useRegister } from '@/contexts/Auth';
+import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
+import { ENamesPages } from '@/constants/ENamesPages';
 
 export default function Cadastrar() {
-	const handlePressSignUp = (user:IUser) => {
-		console.log(user);		
+	const {signUp,loading,error} = useRegister();	
+	const [modalVisible,setModalVisible] = useState<boolean>(true);
+
+	const router = useRouter();
+
+	const handlePressSignUp = async (user:TUserSignUp) => {
+		await signUp(user);
+		navigateToSignIn();
 	};
 
-	return (
+	useEffect(()=>{
+		if (error) 
+			setModalVisible(true);
+	},[error]);
+
+	const navigateToSignIn = useCallback(() => {
+		if (!error && !loading)
+			if(router.canGoBack())
+				router.back();
+			else
+				router.push(`/${ENamesPages.entrar}`);
+	},[loading,error]);	
+
+	return (		
 		<SignUpProvider>
 			<View style={styles.container}>
-				<SignUp onPressSignUp={handlePressSignUp} isLoading />			
+				<SignUp onPressSignUp={handlePressSignUp} isLoading={loading} />
+				<ModalError 
+					error={error} 
+					visible={modalVisible} 
+					onDismiss={() => setModalVisible(!modalVisible)} />					
 			</View>
-		</SignUpProvider>
+		</SignUpProvider>		
 	);
 };
 

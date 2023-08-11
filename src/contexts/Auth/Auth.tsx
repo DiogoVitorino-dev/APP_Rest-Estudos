@@ -1,61 +1,99 @@
 import { ENamesPages } from '@/constants/ENamesPages';
+import { GenericEnum } from '@/constants/GenericEnum';
 import { IUser } from '@/models';
+import { AuthService } from '@/shared/api/auth';
+import { clearSecureStore, getValueSafety, saveSafety } from '@/shared/services/secureStorage';
 import { router, useSegments } from 'expo-router';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
+export type TUserSignIn = {email:string,password:string}
+type TUserNullable = IUser | null
+
 interface IAuthContext {
-	signIn: (user:Omit<IUser,'username'>) => void,
-	signOut: () => void,
-	user:null | IUser
+	signIn: (user:TUserSignIn) => Promise<void>
+	signOut: () => Promise<void>
+	user: TUserNullable
+	loading: boolean
+	error?: string
+}
+interface IProps {
+	children: React.JSX.Element | React.JSX.Element[]
 }
 
-const AuthContext = createContext({
-	signIn: () => {},
-	signOut: () => {},
-	user:null
-} as IAuthContext);
+const AuthContext = createContext<IAuthContext>({
+	signIn: async () => {},
+	signOut: async () => {},
+	user:null,
+	loading:false,
+	error:''
+});
 
-// This hook can be used to access the user info.
-export function useAuth() {
-	return useContext(AuthContext);
-}
-
-// This hook will protect the route access based on user authentication.
-function useProtectedRoute(user) {
+function useProtectedRoute(user:TUserNullable) {
 	const segments = useSegments();
 
-	useEffect(() => {
-		console.log(segments[0]);
-		
+	const redirects = async (user:TUserNullable) => {
 		const inAuthGroup = segments[0] === '(auth)';
-
-		if (
-		// If the user is not signed in and the initial segment is not anything in the auth group.
-			!user &&
-      !inAuthGroup
+		const inRootGroup = segments[0] === '(drawer)';
+		const token = await getValueSafety(GenericEnum.secureKeyToken);
+		// retirar MOCK USER__________________________
+		if (token) user={id:1,username:'mock'};		
+		
+		if (			
+			!user && !inAuthGroup && !token
 		) {
 			// Redirect to the sign-in page.
-			router.replace(`/(auth)/${ENamesPages.entrar}`);
-		} else if (user && inAuthGroup) {
+			router.replace(`/${ENamesPages.entrar}`);
+		} else if (user && !inRootGroup && token) {
 			// Redirect away from the sign-in page.
 			router.replace(`/(drawer)/${ENamesPages.paginaInicial}`);
 		}
+	};
+
+	useEffect(() => {	
+		redirects(user);
 	}, [user, segments]);
 }
 
-export function AuthProvider(props) {
-	const [user, setAuth] = useState<Omit<IUser,'username'> | null>({email:'a',password:'a'});
+export const useAuth = () => useContext(AuthContext);
 
+export function AuthProvider({children}:IProps) {
+	const [user, setAuth] = useState<TUserNullable>(null);
+	const [error, setError] = useState<string | undefined>(undefined);
+	const [loading, setLoading] = useState<boolean>(false);
+	
 	useProtectedRoute(user);
+
+	const handleSignIn = async (user:TUserSignIn) => {
+		setLoading(true);
+		setError(undefined);
+		const result = await AuthService.auth(user);
+
+		if (result instanceof Error) {
+			setError(result.message);
+		} else {
+			await saveSafety(GenericEnum.secureKeyToken, result.accessToken);
+			setAuth({id:1,username:'mock'});
+		}
+		setLoading(false);
+	};
+	
+	const handleSignOut = async () => {
+		setLoading(true);
+		await clearSecureStore(GenericEnum.secureKeyToken);		
+		setAuth(null);
+		setLoading(false);
+	};
 
 	return (
 		<AuthContext.Provider
 			value={{
-				signIn: (user:Omit<IUser,'username'>) => setAuth(user),
-				signOut: () => setAuth(null),
+				signIn: handleSignIn,
+				signOut: handleSignOut,
+				loading,
+				error,
 				user,
 			}}>
-			{props.children}
+			{children}
 		</AuthContext.Provider>
 	);
 }

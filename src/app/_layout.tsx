@@ -1,11 +1,8 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useFonts } from 'expo-font';
-import { Slot, SplashScreen } from 'expo-router';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useColorScheme } from 'react-native';
 import { useEffect } from 'react';
-import { AuthProvider } from '@/contexts/Auth';
-import { PaperProvider } from 'react-native-paper';
+import { SplashScreen } from 'expo-router';
+import RootLayoutNav from '.';
 
 export {
 	ErrorBoundary,
@@ -38,19 +35,4 @@ export default function RootLayout() {
 	}
 	
 	return <RootLayoutNav />;
-}
-
-
-function RootLayoutNav(){
-	const colorScheme = useColorScheme();
-	return (
-		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-			<AuthProvider>
-				<PaperProvider>
-					<Slot />
-				</PaperProvider>		
-			</AuthProvider>
-		</ThemeProvider>
-	);
-
 }

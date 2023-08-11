@@ -3,13 +3,12 @@ import {StyleSheet} from 'react-native';
 import { StyledView, OpenText, View, Button, LinkText } from '@/shared/components';
 import Colors from '@/constants/Colors';
 import { useTheme } from '@react-navigation/native';
-import { Input } from './Input';
-import { IUser } from '@/models';
-import { useSignUpContext } from '@/contexts/Auth';
+import { TUserSignUp, useSignUpContext } from '@/contexts/Auth';
 import { ENamesPages } from '@/constants/ENamesPages';
+import { InputEmail, InputPassword, InputUsername } from '../../shared/inputs';
 
 interface IProps {
-	onPressSignUp: (user:IUser) => void
+	onPressSignUp: (user:TUserSignUp) => void
 	isLoading:boolean
 }
 
@@ -33,62 +32,50 @@ export function SignUp({onPressSignUp,isLoading}:IProps) {
 	const theme = useTheme();
 
 	const validateBeforeSignUp = () => {
-		const result = validateFields();
-		if (result) onPressSignUp({email,password,username});
+		const isValidate = validateFields();
+		if (isValidate) 
+			onPressSignUp({email,password,username});
 	};
 	
 	return (
 	 <StyledView style={styles.container}>			
-			<OpenText style={[styles.title,{
-				color:Colors[theme.dark ? 'dark' : 'light'].text
-			}]}>Criar conta</OpenText>			
+			<OpenText style={[
+				styles.title,{
+					color:Colors[theme.dark ? 'dark' : 'light'].text
+				}]}>Criar conta</OpenText>			
 			
 			<OpenText style={styles.subtitle}>Seu nome</OpenText>
-			<Input 
-				textInputProps={{					
-					value:username,
-					textContentType:'familyName',
-					onChangeText:text => setUsername(text),					
-				}}
-				errorMessage={errorUsername}
-				style={styles.input}
+			<InputUsername 
+				onChangeText={(text) => setUsername(text)}
+				value={username}
+				error={errorUsername}
 			/>
 
-			<OpenText style={styles.subtitle}>Endereço de e-mail</OpenText>
-			<Input 
-				textInputProps={{					
-					value:email,
-					textContentType:'emailAddress',
-					onChangeText:text => setEmail(text),				
-				}}
-				errorMessage={errorEmail}
-				style={styles.input}
-			/>
+			<OpenText style={styles.subtitle}>Endereço de e-mail</OpenText>			
+			<InputEmail 
+				onChangeText={(text) => setEmail(text)}
+				value={email}
+				error={errorEmail}
+			/>		
+			
 
-			<OpenText style={styles.subtitle}>Senha</OpenText>		
-			<Input 
-				textInputProps={{
-					placeholder:'Pelo menos 6 caracteres',
-					secureTextEntry:true,										
-					value:password,
-					onChangeText:text => setPassword(text),												
-				}}
-				errorMessage={errorPassword}
-				style={styles.input}				
-			/>
+			<OpenText style={styles.subtitle}>Senha</OpenText>
+			<InputPassword
+				placeholder='Pelo menos 6 caracteres' 
+				onChangeText={(text) => setPassword(text)}
+				value={password}
+				error={errorPassword}
+				showPasswordButtonVisible
+			/>				
 			
 			
-			<OpenText style={styles.subtitle}>Digite novamente a senha</OpenText>			
-			<Input 
-				textInputProps={{						
-					secureTextEntry:true,										
-					value:passwordConfirm,
-					onChangeText:text => setPasswordConfirm(text),												
-				}}
-				errorMessage={errorPasswordConfirm}
-				style={styles.input}				
-			/>
-			
+			<OpenText style={styles.subtitle}>Digite novamente a senha</OpenText>
+			<InputPassword
+				placeholder='' 
+				onChangeText={(text) => setPasswordConfirm(text)}
+				value={passwordConfirm}
+				error={errorPasswordConfirm}				
+			/>	
 
 			<Button 
 				title='Criar conta'					

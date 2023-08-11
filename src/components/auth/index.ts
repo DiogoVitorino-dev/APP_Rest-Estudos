@@ -1,3 +1,3 @@
 export * from './SignIn';
-export * from './Input';
+export * from './ModalError';
 export * from './SignUp';

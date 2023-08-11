@@ -1,22 +1,26 @@
-import { StyleSheet } from 'react-native';
-
-import { View } from '@/shared/components';
+import { ScrollView, StyleSheet } from 'react-native';
 import TotalInfo from '@/components/pagina-inicial/TotalInfo';
 
 export default function PaginaInicial() {
 	return (
-		<View style={styles.container}>
+		<ScrollView 
+			persistentScrollbar={true}
+			contentContainerStyle={styles.contentContainerStyle} 
+			style={styles.container}>
 			<TotalInfo title='Total de pessoas' info='0' />
 			<TotalInfo title='Total de cidades' info='153' />
-		</View>
+		</ScrollView>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
-		width:'100%',    
+		width:'100%',
+	},
+	
+	contentContainerStyle: {
+		justifyContent:'center',
 		flexDirection:'row',
-		flexWrap:'wrap',    
-		justifyContent:'center', 
+		flexWrap:'wrap',		
 	},
 });

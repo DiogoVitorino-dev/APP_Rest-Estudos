@@ -30,7 +30,7 @@ export function StyledView({children,style,darkColor,lightColor}:IProps) {
 const styles = StyleSheet.create({
 	container:{				
 		boxShadow:'3px 3px 10px rgba(0,0,0,0.1)',
-		borderRadius:10,
+		borderRadius:20,
 		borderWidth:StyleSheet.hairlineWidth,	
 		elevation:5
 	},

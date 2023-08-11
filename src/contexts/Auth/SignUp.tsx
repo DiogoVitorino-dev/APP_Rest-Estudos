@@ -1,21 +1,25 @@
-import { IUser } from '@/models';
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import * as yup from 'yup';
-import { ValidationYup } from '@/shared/services/ValidationYup';
+import { ValidationYup } from '@/shared/services/validation/ValidationYup';
+import { TUserSignUp } from './Register';
 
+interface TUserSignUpFields extends TUserSignUp {
+	username:string
+	email:string
+	password:string
+	passwordConfirm:string
+} 
 
-interface ISignUpContext extends IUser {	
+interface ISignUpContext extends TUserSignUpFields {	
 	setUsername: (text:string) => void
-	errorUsername?:string
+	errorUsername?:string	
 	
 	setEmail: (text:string) => void
 	errorEmail?:string
-
 	
 	setPassword: (text:string) => void
-	errorPassword?:string
+	errorPassword?:string	
 	
-	passwordConfirm: string
 	setPasswordConfirm: (text:string) => void
 	errorPasswordConfirm?:string
 
@@ -38,11 +42,9 @@ const SignUpContext = createContext<ISignUpContext>({
 	validateFields:() => {return false;}
 });
 
-export function useSignUpContext() {
-	return useContext(SignUpContext);
-}
+export const useSignUpContext = () => useContext(SignUpContext);
 
-interface validationObject extends IUser {}
+interface validationObject extends Omit<TUserSignUpFields,'passwordConfirm'> {}
 
 const createValidation:yup.ObjectSchema<validationObject> = yup.object().shape({
 	username: yup.string().required().min(3).max(32),
@@ -61,9 +63,9 @@ export function SignUpProvider({children}:IProps) {
 	const [errorPassword, setErrorPassword] = useState<string>('');
 	const [errorPasswordConfirm, setErrorPasswordConfirm] = useState<string>('');
 
-	const handleSetUsername = (username:string) => {
+	const handleSetUsername = useCallback((username:string) => {
 		setUsername(username);
-	};
+	},[username]);
 	
 	const handleSetEmail = useCallback((email:string) => {
 		setEmail(email);

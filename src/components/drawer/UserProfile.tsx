@@ -1,37 +1,33 @@
 import React from 'react';
-import {Image, ImageSourcePropType, StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Button, MaterialIcon, OpenText, View } from '@/shared/components';
 import Colors from '@/constants/Colors';
 import { useTheme } from '@react-navigation/native';
+import { useAuth } from '@/contexts/Auth';
 
-interface IProps {
-	userName?:string 
-	profilePicture?:ImageSourcePropType
-}
-
-export default function UserProfile({userName,profilePicture}:IProps) {
+export default function UserProfile() {
 	const theme = useTheme();
+	const {signOut, user, loading} = useAuth();
 	return (
-		<View style={styles.container}>
-			{profilePicture ? (
-				<Image style={styles.image} source={profilePicture} />
-			) : (
-				<MaterialIcon name='account-circle' size={100} />
-			)}
+		<View style={styles.container}>			
+			<MaterialIcon name='account-circle' size={100} />
+			
 			<View style={styles.user}>
 				<OpenText numberOfLines={1} adjustsFontSizeToFit style={styles.userName}>
-					{'Ola, '+userName || ''}
+					{user ? `Ola, ${user?.username}` : ''}
 				</OpenText>
 				<Button 
 					icon={{
 						name:'logout',
 						size:15,
 						color:Colors[theme.dark ? 'dark' : 'light'].warning
-					}} 
+					}}
+					backgroundColor='transparent'
+					loading={loading}
 					title='Sair'
 					rippleColor={Colors[theme.dark ? 'dark' : 'light'].warning}
 					titleStyle={{color:Colors[theme.dark ? 'dark' : 'light'].warning}}
-					onPress={() => {console.log('saindo...');}}	
+					onPress={() => signOut()}	
 					style={{width:80}}				
 				/>
 			</View>

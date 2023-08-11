@@ -16,7 +16,7 @@ const darkColor = '#262626';
 
 export function SectionItem({item,isFirstItem,isLastItem}:IProps) {
 	return (		
-		<Link href={item.screen || `/(drawer)/${ENamesPages.paginaInicial}`}asChild>
+		<Link href={item.screen || `/${ENamesPages.paginaInicial}`}asChild>
 			<TouchableOpacity activeOpacity={0.85}>
 				<StyledView style={[
 					styles.container,

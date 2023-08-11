@@ -29,30 +29,46 @@ export function Button(
 	return (		
 		<ButtonPaper
 			disabled={disabled}			
-			loading={loading}			
-			style={[{opacity:disabled ? 0.9 : 1},style]}
+			loading={loading}
 			mode={mode || 'text'}
+			buttonColor={backgroundColor}
+			onPress={onPress}
+			contentStyle={styles.button}			
+			
+
+			icon={()=>icon ? (<MaterialIcon {...icon} />) : undefined}
+
 			rippleColor={
 				rippleColor || Colors[theme.dark ? 'dark' : 'light'].tint
 			}
-			buttonColor={backgroundColor}
-			onPress={onPress}
-			icon={()=>icon ? (<MaterialIcon {...icon} />) : null}
+
+			style={[{
+				backgroundColor:backgroundColor || Colors[theme.dark ? 'dark' : 'light'].tint + 80,
+				opacity:disabled ? 0.4 : 1
+			},style]}			
 		>		
 			<OpenText style={[styles.title,{
 				color: Colors[theme.dark ? 'dark' : 'light'].text
 			},titleStyle]}>
 				{title}
-			</OpenText>					
+			</OpenText>				
 		</ButtonPaper>
 		
 	);
 };
 
 const styles = StyleSheet.create({
-	title:{
-		textAlign:'center',			
+	button:{		
+		alignItems:'center',
+		justifyContent:'center',
+	},
+	title:{					
 		fontWeight:'bold',
+	},
+	contentStyle:{
+		flex:1,
+		justifyContent:'center'
 	}
+
 	
 });

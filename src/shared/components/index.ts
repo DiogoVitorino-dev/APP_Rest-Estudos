@@ -6,3 +6,4 @@ export * from './Themed';
 export * from './Button';
 export * from './LinkText';
 export * from './StyledView';
+export * from './SimpleModal';
