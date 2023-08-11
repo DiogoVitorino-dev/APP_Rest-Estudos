@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Button, MaterialIcon, OpenText, View } from '@/shared/components';
 import Colors from '@/constants/Colors';
 import { useTheme } from '@react-navigation/native';
-import { useAuth } from '@/contexts/Auth';
+import { useAuth } from '@/contexts/auth';
 
 export default function UserProfile() {
 	const theme = useTheme();

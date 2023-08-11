@@ -1,6 +1,6 @@
-import { ModalError, SignUp } from '@/components/auth';
-import { View } from '@/shared/components';
-import { SignUpProvider, TUserSignUp, useRegister } from '@/contexts/Auth';
+import { SignUp } from '@/components/auth';
+import { ModalError, View } from '@/shared/components';
+import { SignUpProvider, TUserSignUp, useRegister } from '@/contexts/register';
 import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';

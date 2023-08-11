@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import { StyledView, OpenText, View, Button, LinkText } from '@/shared/components';
 import Colors from '@/constants/Colors';
 import { useTheme } from '@react-navigation/native';
-import { TUserSignUp, useSignUpContext } from '@/contexts/Auth';
+import { TUserSignUp, useSignUpContext } from '@/contexts/auth';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { InputEmail, InputPassword, InputUsername } from '../../shared/inputs';
 

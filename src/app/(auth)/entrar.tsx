@@ -1,7 +1,6 @@
-import { ModalError, SignIn } from '@/components/auth';
-import { View } from '@/shared/components';
-import { SignInProvider } from '@/contexts/Auth';
-import { TUserSignIn, useAuth } from '@/contexts/Auth/Auth';
+import { SignIn } from '@/components/auth';
+import { ModalError, View } from '@/shared/components';
+import { SignInProvider, TUserSignIn, useAuth } from '@/contexts/auth';
 import { StyleSheet } from 'react-native';
 import { useEffect, useState } from 'react';
 

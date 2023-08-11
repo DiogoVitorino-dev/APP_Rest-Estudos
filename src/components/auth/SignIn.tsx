@@ -4,7 +4,7 @@ import { StyledView, OpenText, View, Button, LinkText } from '@/shared/component
 import Colors from '@/constants/Colors';
 import { useTheme } from '@react-navigation/native';
 import { ENamesPages } from '@/constants/ENamesPages';
-import { TUserSignIn, useSignInContext } from '@/contexts/Auth';
+import { TUserSignIn, useSignInContext } from '@/contexts/auth';
 import { InputEmail, InputPassword } from '../../shared/inputs';
 
 interface IProps {

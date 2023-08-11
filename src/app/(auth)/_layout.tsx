@@ -2,7 +2,7 @@ import { ELabelsPages } from '@/constants/ELabelsPages';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { Stack } from 'expo-router';
 import '@/shared/services/validation/TranslationYup';
-import { RegisterProvider } from '@/contexts/Auth';
+import { RegisterProvider } from '@/contexts/register';
 
 export default function AuthLayout() {	
 	return (
