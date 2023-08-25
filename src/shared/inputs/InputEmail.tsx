@@ -4,17 +4,18 @@ import { InputDefault } from './InputDefault';
 
 interface IProps {
 	value:string
+	placeholder?:string
 	onChangeText: (text:string) => void
 	error?:string
 }
 
-export function InputEmail({onChangeText,value,error}:IProps) {
+export function InputEmail({onChangeText,value, placeholder,error}:IProps) {
 	return (
 		<InputDefault 
 			textInputProps={{
-				placeholder:'E-mail',
+				placeholder,
 				value,
-				textContentType:'emailAddress',
+				textContentType:'emailAddress',				
 				onChangeText
 			}}
 			errorMessage={error}

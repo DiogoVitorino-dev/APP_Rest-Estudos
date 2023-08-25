@@ -1,9 +1,10 @@
-import Colors  from '@/constants/Colors';
-import { TMaterialIconNames } from '@/constants/Types';
-import { MaterialIcons } from '@expo/vector-icons';
-import { useTheme } from '@react-navigation/native';
 import React from 'react';
 import { OpaqueColorValue, StyleProp, TextStyle } from 'react-native';
+import { useTheme } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons';
+
+import Colors  from '@/constants/Colors';
+import { TMaterialIconNames } from '@/constants/Types';
 
 export interface IMaterialIconProps {
 	name: TMaterialIconNames

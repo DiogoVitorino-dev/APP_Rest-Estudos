@@ -1,17 +1,14 @@
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import * as yup from 'yup';
-import { ValidationYup } from '@/shared/services/validation/ValidationYup';
-import { TUserSignIn } from './Auth';
+import { ValidationYup } from '@/shared/services/validation/yup';
+import { IUsuarioSignIn } from '@/models/Usuario';
 
-
-interface ISignInContext extends TUserSignIn{
-	email:string,
+interface ISignInContext extends IUsuarioSignIn {	
 	setEmail: (text:string) => void
 	errorEmail?:string
-
-	password:string,
-	setPassword: (text:string) => void
-	errorPassword?:string
+	
+	setSenha: (text:string) => void
+	errorSenha?:string
 
 	validateFields: () => true | false
 }
@@ -22,52 +19,47 @@ interface IProps {
 
 const SignInContext = createContext<ISignInContext>({
 	email:'',
-	password:'',
+	senha:'',
 	setEmail:() => {},
-	setPassword:() => {},
+	setSenha:() => {},
 	errorEmail:'',
-	errorPassword:'',
+	errorSenha:'',
 	validateFields:() => {return false;}
 });
 
-export function useSignInContext() {
-	return useContext(SignInContext);
-}
+export const useSignInContext = () => useContext(SignInContext);
 
-interface validationObject {
-	email:string
-	password:string
-}
+interface validationObject extends IUsuarioSignIn {}
 
 const createValidation:yup.ObjectSchema<validationObject> = yup.object().shape({
 	email: yup.string().email().required().min(5),
-	password: yup.string().required().min(6)
+	senha: yup.string().required().min(6)
 });
 
 export function SignInProvider({children}:IProps) {
 	const [email, setEmail] = useState<string>('');
-	const [password, setPassword] = useState<string>('');
+	const [senha, setSenha] = useState<string>('');
 	
 	const [errorEmail, setErrorEmail] = useState<string>('');
-	const [errorPassword, setErrorPassword] = useState<string>('');
+	const [errorSenha, setErrorSenha] = useState<string>('');
 
 	const handleSetEmail = useCallback((email:string) => {
 		setEmail(email);
 	},[email]);
 	
-	const handleSetPassword = useCallback((password:string) => {
-		setPassword(password);		
-	},[password]);
+	const handleSetSenha = useCallback((senha:string) => {
+		setSenha(senha);		
+	},[senha]);
 
 	const validateFields = () => {
-		const errors = ValidationYup(createValidation,{email,password});
+		const errors = ValidationYup(createValidation,{email,senha});
 
 		if (errors) {
 			if (errors['email'])
 				setErrorEmail(errors['email']); 
 			
-			if (errors['password'])
-				setErrorPassword(errors['password']);
+			if (errors['senha'])
+				setErrorSenha(errors['senha']);
 
 			return false;
 		}
@@ -79,13 +71,13 @@ export function SignInProvider({children}:IProps) {
 		<SignInContext.Provider value={
 			useMemo(() => ({
 				email,
-				password,				
+				senha,				
 				setEmail:handleSetEmail,
-				setPassword:handleSetPassword,				
+				setSenha:handleSetSenha,				
 				errorEmail,
-				errorPassword,				
+				errorSenha,				
 				validateFields
-			}),[email,password,errorEmail,errorPassword])
+			}),[email,senha,errorEmail,errorSenha])
 		}>
 			{children}			
 		</SignInContext.Provider>		

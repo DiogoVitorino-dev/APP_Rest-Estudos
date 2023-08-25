@@ -1,8 +1,9 @@
 import React from 'react';
-import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import { View } from './Themed';
-import Colors from '@/constants/Colors';
 import { useTheme } from '@react-navigation/native';
+import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
+
+import Colors from '@/constants/Colors';
+import { View } from './Themed';
 
 interface IProps {
 	lightColor?:string

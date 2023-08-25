@@ -1,10 +1,11 @@
 import React from 'react';
 import {StyleProp, StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import { IMaterialIconProps, MaterialIcon } from './MaterialIcon';
-import { OpenText } from './StyledText';
-import { Button as ButtonPaper } from 'react-native-paper';
 import { useTheme } from '@react-navigation/native';
+import { Button as ButtonPaper } from 'react-native-paper';
+
 import Colors from '@/constants/Colors';
+import { IMaterialIconProps, MaterialIcon } from '../components/MaterialIcon';
+import { OpenText } from '../components/StyledText';
 
 interface IProps {
 	icon?:IMaterialIconProps
@@ -14,7 +15,7 @@ interface IProps {
 	rippleColor?:string
 	backgroundColor?:string
 	mode?: TButtonPaperMode
-	style?:StyleProp<Omit<ViewStyle, | 'backgroundColor'>>
+	style?:StyleProp<Omit<ViewStyle , 'backgroundColor'>>
 	disabled?:boolean
 	loading?:boolean
 }
@@ -28,7 +29,7 @@ export function Button(
 	
 	return (		
 		<ButtonPaper
-			disabled={disabled}			
+			disabled={disabled || loading}			
 			loading={loading}
 			mode={mode || 'text'}
 			buttonColor={backgroundColor}
@@ -39,11 +40,11 @@ export function Button(
 			icon={()=>icon ? (<MaterialIcon {...icon} />) : undefined}
 
 			rippleColor={
-				rippleColor || Colors[theme.dark ? 'dark' : 'light'].tint
+				rippleColor || Colors[theme.dark ? 'dark' : 'light'].buttonSelected
 			}
 
 			style={[{
-				backgroundColor:backgroundColor || Colors[theme.dark ? 'dark' : 'light'].tint + 80,
+				backgroundColor:backgroundColor || Colors[theme.dark ? 'dark' : 'light'].button,
 				opacity:disabled ? 0.4 : 1
 			},style]}			
 		>		
@@ -69,6 +70,4 @@ const styles = StyleSheet.create({
 		flex:1,
 		justifyContent:'center'
 	}
-
-	
 });

@@ -1,6 +1,6 @@
 import { Drawer } from 'expo-router/drawer';
 
-import { HeaderButton, MaterialIcon } from '@/shared/components';
+import {  MaterialIcon } from '@/shared/components';
 import { Platform, useWindowDimensions } from 'react-native';
 import Colors  from '@/constants/Colors';
 import { ENamesPages } from '@/constants/ENamesPages';
@@ -10,6 +10,7 @@ import { DrawerContent, DrawerContentComponentProps } from '@react-navigation/dr
 import { useTheme } from '@react-navigation/native';
 import { TMaterialIconNames } from '@/constants/Types';
 import { useCallback } from 'react';
+import { HeaderButton } from '@/shared/buttons';
 
 const headerRight = () => (
 	<HeaderButton 
@@ -36,6 +37,7 @@ export default function DrawerLayout() {
 	const theme = useTheme();
 	const {width} = useWindowDimensions();
 	const adaptiveScreen = useCallback(() => width > 900 && Platform.OS === 'web',[width]); 
+
 	return <Drawer 
 		screenOptions={{			
 			headerRight,					
@@ -43,7 +45,7 @@ export default function DrawerLayout() {
 			drawerLabelStyle:{color:Colors[theme.dark ? 'dark' : 'light'].text},
 			headerTintColor:Colors[theme.dark ? 'dark' : 'light'].iconDefault,		
 			drawerType: adaptiveScreen() ? 'permanent' : 'slide',
-			headerLeft: adaptiveScreen() ?  () => (<></>) : undefined,
+			headerLeft: adaptiveScreen() ?  () => (<></>) : undefined,			
 		}}
 		drawerContent={drawerContent}		
 		initialRouteName={ENamesPages.paginaInicial}			

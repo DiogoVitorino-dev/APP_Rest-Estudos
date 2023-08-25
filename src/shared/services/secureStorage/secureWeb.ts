@@ -6,6 +6,6 @@ export const getValueSafetyWeb = async (key:string) => {
 	return localStorage.getItem(key);	
 };
 
-export const clearSecureStoreWeb = async (key:string) => {
+export const cleanSecureStoreWeb = async (key:string) => {
 	localStorage.removeItem(key);	
 };

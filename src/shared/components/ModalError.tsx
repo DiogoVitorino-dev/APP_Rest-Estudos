@@ -1,10 +1,10 @@
-import { SimpleModal } from '@/shared/components';
 import React from 'react';
+import { SimpleModal } from '@/shared/components';
 
 interface IProps {
 	error?:string
 	visible:boolean
-	onDismiss:() => void
+	onDismiss?:() => void
 }
 
 export function ModalError({onDismiss,visible,error}:IProps) {

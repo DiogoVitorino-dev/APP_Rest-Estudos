@@ -6,5 +6,7 @@ export enum ENamesPages {
 	sobre='sobre',
 	temas='temas',
 	entrar='entrar',
-	cadastrar='cadastrar'
+	cadastrar='cadastrar',
+	detalhe='detalhe',
+	nova='nova',
 }

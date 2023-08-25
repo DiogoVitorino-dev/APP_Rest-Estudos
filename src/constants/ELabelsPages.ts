@@ -6,5 +6,9 @@ export enum ELabelsPages {
 	sobre='Sobre',
 	temas='Temas',
 	entrar='Entrar',
-	cadastrar='Cadastrar'
+	cadastrar='Cadastrar',
+	detalheCidade='Editar cidade',
+	novaCidade='Nova cidade',
+	detalhePessoas='Editar pessoa',
+	novaPessoas='Nova pessoa'
 }

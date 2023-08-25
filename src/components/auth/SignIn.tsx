@@ -1,53 +1,57 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import { StyledView, OpenText, View, Button, LinkText } from '@/shared/components';
-import Colors from '@/constants/Colors';
 import { useTheme } from '@react-navigation/native';
+
+import Colors from '@/constants/Colors';
+import { StyledView, OpenText, View, Button, LinkText } from '@/shared/components';
 import { ENamesPages } from '@/constants/ENamesPages';
-import { TUserSignIn, useSignInContext } from '@/contexts/auth';
+import { useSignInContext } from '@/contexts/auth';
 import { InputEmail, InputPassword } from '../../shared/inputs';
+import { useAppSelector } from '@/store/Hooks';
+import { selectStatus } from '@/store/slices/AuthSlice';
+import { IUsuarioSignIn } from '@/models/Usuario';
 
 interface IProps {
-	onPressLogin: (user:TUserSignIn) => void
-	isLoading:boolean
+	onPressLogin: (user:IUsuarioSignIn) => void
 }
 
-export function SignIn({onPressLogin,isLoading}:IProps) {
+export function SignIn({onPressLogin}:IProps) {
 	const {
 		email,
-		password,
+		senha,
 		setEmail,
-		setPassword,
+		setSenha,
 		errorEmail,
-		errorPassword,
+		errorSenha,
 		validateFields
 	} = useSignInContext();
-
+	
+	const status = useAppSelector(selectStatus);
 	const theme = useTheme();
 
-	const validateBeforeLogin = () => {
+	const beforeLogin = () => {
 		const result = validateFields();
-		if (result) onPressLogin({email,password});
+		if (result) onPressLogin({email,senha});
 	};
 	
 	return (
 	 <StyledView style={styles.container}>			
-			<OpenText style={[styles.title,{
-				color:Colors[theme.dark ? 'dark' : 'light'].text
-			}]}>
+			<OpenText style={styles.title}>
 				Fazer login
 			</OpenText>	
 					
 			<InputEmail 
 				onChangeText={(text) => setEmail(text)}
+				placeholder='E-mail'
 				value={email}
 				error={errorEmail}
 			/>
 			
 			<InputPassword 
-				onChangeText={(text) => setPassword(text)}
-				value={password}
-				error={errorPassword}
+				onChangeText={(text) => setSenha(text)}
+				placeholder='Senha'
+				value={senha}
+				error={errorSenha}
 				showPasswordButtonVisible
 			/>	
 
@@ -57,14 +61,12 @@ export function SignIn({onPressLogin,isLoading}:IProps) {
 				style={styles.loginButton}
 				mode='elevated'				
 				disabled={
-					!email || !password
+					!email || !senha
 						? true 
 						: false
 				}
-				loading={isLoading}
-				backgroundColor={Colors[theme.dark ? 'dark' : 'light'].button}
-				rippleColor={Colors[theme.dark ? 'dark' : 'light'].buttonSelected}
-				onPress={() => validateBeforeLogin()} 
+				loading={status === 'loading'}				
+				onPress={beforeLogin} 
 			/>		
 			
 			<View style={styles.signUpLink}>				

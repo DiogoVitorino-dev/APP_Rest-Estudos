@@ -3,18 +3,29 @@ import { StyleSheet } from 'react-native';
 import { Button, MaterialIcon, OpenText, View } from '@/shared/components';
 import Colors from '@/constants/Colors';
 import { useTheme } from '@react-navigation/native';
-import { useAuth } from '@/contexts/auth';
+import { useAppDispatch, useAppSelector } from '@/store/Hooks';
+import { selectStatus, selectUsuario } from '@/store/slices/AuthSlice';
+import { signOut } from '@/store/thunks/AuthThunks';
+
 
 export default function UserProfile() {
 	const theme = useTheme();
-	const {signOut, user, loading} = useAuth();
+	const dispatch = useAppDispatch();
+
+	const usuario = useAppSelector(selectUsuario);
+	const status = useAppSelector(selectStatus);
+
+	const handleOnPressSignOut = () => {
+		dispatch(signOut());
+	};
+
 	return (
 		<View style={styles.container}>			
 			<MaterialIcon name='account-circle' size={100} />
 			
 			<View style={styles.user}>
 				<OpenText numberOfLines={1} adjustsFontSizeToFit style={styles.userName}>
-					{user ? `Ola, ${user?.username}` : ''}
+					{usuario ? `Ola, ${usuario.nome}` : ''}
 				</OpenText>
 				<Button 
 					icon={{
@@ -23,11 +34,11 @@ export default function UserProfile() {
 						color:Colors[theme.dark ? 'dark' : 'light'].warning
 					}}
 					backgroundColor='transparent'
-					loading={loading}
+					loading={status === 'loading'}
 					title='Sair'
 					rippleColor={Colors[theme.dark ? 'dark' : 'light'].warning}
 					titleStyle={{color:Colors[theme.dark ? 'dark' : 'light'].warning}}
-					onPress={() => signOut()}	
+					onPress={handleOnPressSignOut}	
 					style={{width:80}}				
 				/>
 			</View>
@@ -42,6 +53,7 @@ const styles = StyleSheet.create({
 		alignItems:'center',		
 		flexDirection:'row',
 		padding:10,
+		marginTop:15
 	},
 	
 	user:{

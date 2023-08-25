@@ -1,20 +1,24 @@
+import React, { useEffect, useState } from 'react';
+import { StyleSheet } from 'react-native';
+
 import { SignUp } from '@/components/auth';
 import { ModalError, View } from '@/shared/components';
-import { SignUpProvider, TUserSignUp, useRegister } from '@/contexts/register';
-import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
-import { ENamesPages } from '@/constants/ENamesPages';
+import { useAppDispatch, useAppSelector } from '@/store/Hooks';
+import { signIn, signUp } from '@/store/thunks/AuthThunks';
+import { selectError } from '@/store/slices/AuthSlice';
+import { IUsuarioSignUp } from '@/models/Usuario';
+import { SignUpProvider } from '@/contexts/auth';
 
-export default function Cadastrar() {
-	const {signUp,loading,error} = useRegister();	
+export default function Cadastrar() {	
 	const [modalVisible,setModalVisible] = useState<boolean>(true);
 
-	const router = useRouter();
+	const error = useAppSelector(selectError);
+	const dispatch = useAppDispatch();
 
-	const handlePressSignUp = async (user:TUserSignUp) => {
-		await signUp(user);
-		navigateToSignIn();
+	const handlePressSignUp = async (usuario:IUsuarioSignUp) => {
+		await dispatch(signUp(usuario)).unwrap();
+		if (!error) 
+			dispatch(signIn({...usuario}));
 	};
 
 	useEffect(()=>{
@@ -22,24 +26,16 @@ export default function Cadastrar() {
 			setModalVisible(true);
 	},[error]);
 
-	const navigateToSignIn = useCallback(() => {
-		if (!error && !loading)
-			if(router.canGoBack())
-				router.back();
-			else
-				router.push(`/${ENamesPages.entrar}`);
-	},[loading,error]);	
-
-	return (		
+	return (
 		<SignUpProvider>
 			<View style={styles.container}>
-				<SignUp onPressSignUp={handlePressSignUp} isLoading={loading} />
+				<SignUp onPressSignUp={handlePressSignUp} />
 				<ModalError 
 					error={error} 
 					visible={modalVisible} 
 					onDismiss={() => setModalVisible(!modalVisible)} />					
-			</View>
-		</SignUpProvider>		
+			</View>	
+		</SignUpProvider>			
 	);
 };
 

@@ -1,4 +1,4 @@
-import { HeaderGoBack } from '@/shared/components';
+import { HeaderGoBack } from '@/shared/buttons';
 import Colors  from '@/constants/Colors';
 import { ELabelsPages } from '@/constants/ELabelsPages';
 import { ENamesPages } from '@/constants/ENamesPages';
@@ -6,11 +6,7 @@ import { useTheme } from '@react-navigation/native';
 import { Stack, useNavigation } from 'expo-router';
 import { useLayoutEffect } from 'react';
 
-const headerLeft = () => (
-	<HeaderGoBack 		
-		iconName='chevron-left'
-		style={{marginLeft:5}}
-	/>
+const headerLeft = () => (<HeaderGoBack />
 );
 
 export default function ConfiguracoesLayout() {

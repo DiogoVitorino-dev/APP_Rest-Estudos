@@ -1,19 +1,30 @@
+import { useEffect, useState } from 'react';
+import { StyleSheet } from 'react-native';
+
 import { SignIn } from '@/components/auth';
 import { ModalError, View } from '@/shared/components';
-import { SignInProvider, TUserSignIn, useAuth } from '@/contexts/auth';
-import { StyleSheet } from 'react-native';
-import { useEffect, useState } from 'react';
-
+import { useAppDispatch, useAppSelector } from '@/store/Hooks';
+import { cleanError, selectError } from '@/store/slices/AuthSlice';
+import { signIn } from '@/store/thunks/AuthThunks';
+import { IUsuarioSignIn } from '@/models/Usuario';
+import { SignInProvider } from '@/contexts/auth';
 
 export default function Entrar() {	
-	const {signIn,loading,error} = useAuth();
 	const [modalVisible,setModalVisible] = useState<boolean>(true);
 
-	const handlePressLogin = async (user:TUserSignIn) => {
-		await signIn(user);		
+	const dispatch = useAppDispatch();
+	const error = useAppSelector(selectError);
+
+	const handlePressLogin = (usuario:IUsuarioSignIn) => dispatch(signIn(usuario));
+
+	const handleDismissModalError = () => {
+		setModalVisible(false);
+		dispatch(cleanError());
 	};
 
 	useEffect(()=>{
+		console.log('a',error);
+		
 		if (error) 
 			setModalVisible(true);
 	},[error]);
@@ -21,11 +32,11 @@ export default function Entrar() {
  	return (
 		<SignInProvider>
 			<View style={styles.container}>
-				<SignIn onPressLogin={handlePressLogin} isLoading={loading} />				
+				<SignIn onPressLogin={handlePressLogin} />				
 				<ModalError 
 					error={error} 
 					visible={modalVisible} 
-					onDismiss={() => setModalVisible(!modalVisible)} />					
+					onDismiss={handleDismissModalError} />					
 			</View>
 		</SignInProvider>
 	);

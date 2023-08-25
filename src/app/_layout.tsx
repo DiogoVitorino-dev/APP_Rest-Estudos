@@ -3,6 +3,8 @@ import { useFonts } from 'expo-font';
 import { useEffect } from 'react';
 import { SplashScreen } from 'expo-router';
 import RootLayoutNav from '.';
+import { Provider } from 'react-redux';
+import { store } from '@/store';
 
 export {
 	ErrorBoundary,
@@ -16,7 +18,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
 	const [loaded, error] = useFonts({
-		OpenSans: require('../assets/fonts/OpenSans-Regular.ttf'),
+		OpenSans: require('@/assets/fonts/OpenSans-Regular.ttf'),
 		...FontAwesome.font,
 	});
 
@@ -34,5 +36,9 @@ export default function RootLayout() {
 		return null;
 	}
 	
-	return <RootLayoutNav />;
+	return (
+		<Provider store={store}>
+			<RootLayoutNav />
+		</Provider>
+	);
 }

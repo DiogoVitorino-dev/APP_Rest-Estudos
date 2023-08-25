@@ -1,54 +1,54 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import { StyledView, OpenText, View, Button, LinkText } from '@/shared/components';
-import Colors from '@/constants/Colors';
 import { useTheme } from '@react-navigation/native';
-import { TUserSignUp, useSignUpContext } from '@/contexts/auth';
+
+import Colors from '@/constants/Colors';
+import { StyledView, OpenText, View, Button, LinkText } from '@/shared/components';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { InputEmail, InputPassword, InputUsername } from '../../shared/inputs';
+import { useSignUpContext } from '@/contexts/auth';
+import { useAppSelector } from '@/store/Hooks';
+import { selectStatus } from '@/store/slices/AuthSlice';
+import { IUsuarioSignUp } from '@/models/Usuario';
 
 interface IProps {
-	onPressSignUp: (user:TUserSignUp) => void
-	isLoading:boolean
+	onPressSignUp: (usuario:IUsuarioSignUp) => void
 }
 
-export function SignUp({onPressSignUp,isLoading}:IProps) {
+export function SignUp({onPressSignUp}:IProps) {
 	const {
 		email,
-		password,
-		username,
-		passwordConfirm,
-		setUsername,
+		senha,
+		nome,
+		senhaConfirm,
+		setNome,
 		setEmail,
-		setPassword,
-		setPasswordConfirm,
+		setSenha,
+		setSenhaConfirm,
 		errorEmail,
-		errorUsername,
-		errorPassword,
-		errorPasswordConfirm,
+		errorNome,
+		errorSenha,
+		errorSenhaConfirm,
 		validateFields
 	} = useSignUpContext();
 
 	const theme = useTheme();
+	const status = useAppSelector(selectStatus);
 
-	const validateBeforeSignUp = () => {
-		const isValidate = validateFields();
-		if (isValidate) 
-			onPressSignUp({email,password,username});
+	const beforeSignUp = () => {
+		if (validateFields()) 
+			onPressSignUp({email,nome,senha});
 	};
 	
 	return (
 	 <StyledView style={styles.container}>			
-			<OpenText style={[
-				styles.title,{
-					color:Colors[theme.dark ? 'dark' : 'light'].text
-				}]}>Criar conta</OpenText>			
+			<OpenText style={styles.title}>Criar conta</OpenText>			
 			
 			<OpenText style={styles.subtitle}>Seu nome</OpenText>
 			<InputUsername 
-				onChangeText={(text) => setUsername(text)}
-				value={username}
-				error={errorUsername}
+				onChangeText={(text) => setNome(text)}
+				value={nome}
+				error={errorNome}
 			/>
 
 			<OpenText style={styles.subtitle}>Endereço de e-mail</OpenText>			
@@ -62,33 +62,30 @@ export function SignUp({onPressSignUp,isLoading}:IProps) {
 			<OpenText style={styles.subtitle}>Senha</OpenText>
 			<InputPassword
 				placeholder='Pelo menos 6 caracteres' 
-				onChangeText={(text) => setPassword(text)}
-				value={password}
-				error={errorPassword}
+				onChangeText={(text) => setSenha(text)}
+				value={senha}
+				error={errorSenha}
 				showPasswordButtonVisible
 			/>				
 			
 			
 			<OpenText style={styles.subtitle}>Digite novamente a senha</OpenText>
-			<InputPassword
-				placeholder='' 
-				onChangeText={(text) => setPasswordConfirm(text)}
-				value={passwordConfirm}
-				error={errorPasswordConfirm}				
+			<InputPassword				 
+				onChangeText={(text) => setSenhaConfirm(text)}
+				value={senhaConfirm}
+				error={errorSenhaConfirm}				
 			/>	
 
 			<Button 
 				title='Criar conta'					
 				titleStyle={{fontWeight:'bold'}}
 				disabled={
-					!email || !password || !username || !passwordConfirm
+					!email || !senha || !nome || !senhaConfirm
 						? true 
 						: false
 				}
-				loading={isLoading}
-				backgroundColor={Colors[theme.dark ? 'dark' : 'light'].button}
-				rippleColor={Colors[theme.dark ? 'dark' : 'light'].buttonSelected}
-				onPress={() => validateBeforeSignUp()} 
+				loading={status === 'loading'}				
+				onPress={beforeSignUp} 
 			/>
 
 			<View style={styles.signUpLink}>				

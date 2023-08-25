@@ -1,3 +1,4 @@
 export enum GenericEnum {
-	secureKeyToken = 'accessToken'
+	secureKeyToken = 'accessToken',
+	user = 'user'
 }

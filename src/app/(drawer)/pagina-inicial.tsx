@@ -7,8 +7,8 @@ export default function PaginaInicial() {
 			persistentScrollbar={true}
 			contentContainerStyle={styles.contentContainerStyle} 
 			style={styles.container}>
-			<TotalInfo title='Total de pessoas' info='0' />
-			<TotalInfo title='Total de cidades' info='153' />
+			<TotalInfo title='Total de pessoas' info='mexer' />
+			<TotalInfo title='Total de cidades' info='x-total-count' />
 		</ScrollView>
 	);
 }

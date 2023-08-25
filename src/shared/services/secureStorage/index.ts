@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
-import { clearSecureStoreDevice, getValueSafetyDevice, saveSafetyDevice } from './secureDevice';
-import { clearSecureStoreWeb, getValueSafetyWeb, saveSafetyWeb } from './secureWeb';
+import { cleanSecureStoreDevice, getValueSafetyDevice, saveSafetyDevice } from './secureDevice';
+import { cleanSecureStoreWeb, getValueSafetyWeb, saveSafetyWeb } from './secureWeb';
 
 export const saveSafety = 
  Platform.OS !== 'web' 
@@ -12,7 +12,7 @@ export const getValueSafety =
 		? getValueSafetyDevice 
 		: getValueSafetyWeb;
 		
-export const clearSecureStore = 
+export const cleanSecureStore = 
 	Platform.OS !== 'web' 
-		? clearSecureStoreDevice 
-		: clearSecureStoreWeb;
+		? cleanSecureStoreDevice 
+		: cleanSecureStoreWeb;

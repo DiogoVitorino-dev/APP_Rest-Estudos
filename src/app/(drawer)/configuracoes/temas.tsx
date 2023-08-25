@@ -23,7 +23,7 @@ export default function Temas() {
 
 const styles = StyleSheet.create({
 	container:{
-		paddingHorizontal:52,
+		flex:1,			
 		flexDirection:'column'
 	}
 });

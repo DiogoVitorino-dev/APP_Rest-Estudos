@@ -2,7 +2,7 @@
 const tintColorLight = '#649BDE';
 const tintColorDark = '#476E9E';
 
-const borderColorLight = '#E6E6E6';
+const borderColorLight = '#D4D4D4';
 const borderColorDark = '#666666';
 
 export default {
@@ -14,7 +14,7 @@ export default {
 		backdrop:'#F7F7F7',
 		tint: tintColorLight,
 		warning:'#F23838',
-		button:'#71A0A640',
+		button:'#71A0A690',
 		buttonSelected:'#89C2C9',
 		iconDefault: '#333333',
 		iconSelected: tintColorLight,
@@ -34,6 +34,10 @@ export default {
 	},
 	icon:{
 		['settings']:'#95B0C2',	
-		['brush']:'#7A6A8F'
+		['brush']:'#7A6A8F',
+		['EmptyList']:'#D9AD75',
+		['edit']:'#8793A3',	
+		['delete']:'#F23838',	
+				
 	} 
 };

@@ -3,7 +3,7 @@ import { SectionHeader } from '@/components/configuracoes';
 import { MaterialIcon } from '@/shared/components';
 
 import { Platform, SectionList, SectionListRenderItemInfo, StyleSheet } from 'react-native';
-import { Href } from 'expo-router';
+import { Href, useRouter } from 'expo-router';
 import RenderSectionItem from '@/components/configuracoes/RenderSectionItem';
 import Colors  from '@/constants/Colors';
 import { ENamesPages } from '@/constants/ENamesPages';
@@ -57,21 +57,29 @@ const settingsData:ISettingsData[] = [
 const SectionSeparatorComponent = () => <View style={{marginVertical:10}} />;
 
 export default function Configuration() {
+	const router = useRouter();
+
+	const handleOnPressItem = ({screen}:TSettingsData) => {
+		if (screen) router.push(screen);
+	};
+
 	return (
 		<View>
 			<SectionList	
 				sections={settingsData}
-				style={styles.list}				
+				style={styles.list}						
 				showsVerticalScrollIndicator={Platform.OS === 'web'}
 				bounces={false}
 				onEndReachedThreshold={0.5}
 				SectionSeparatorComponent={SectionSeparatorComponent}			
 				keyExtractor={(it) => it.title}			
 				renderSectionHeader={
-					(section:TSettingRenderSectionHeader) => <SectionHeader {...section} />
+					(section:TSettingRenderSectionHeader) => SectionHeader({...section})
 				}
 		 		renderItem={
-					(data:TSettingRenderItemInfo) => <RenderSectionItem {...data} />
+					(data:TSettingRenderItemInfo) => (
+						RenderSectionItem({data:data, onPress:handleOnPressItem})
+					)
 				}			
 			/>
 		</View>
@@ -79,11 +87,13 @@ export default function Configuration() {
 }
 
 const styles = StyleSheet.create({
-	list:{
-		flex: 1, 
-		width: '100%',		
-		maxWidth:864,			 
-		paddingHorizontal:50,
-		marginVertical:15
+	list:{		
+		width: '100%',
+		height:'100%',		
+		maxWidth:864,
+		padding:20,
+		marginVertical:15,
+		
 	},
+	
 });

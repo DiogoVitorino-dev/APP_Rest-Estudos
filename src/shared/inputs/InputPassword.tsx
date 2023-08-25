@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Pressable, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { InputDefault } from './InputDefault';
-import { MaterialIcon, View } from '@/shared/components';
+import { View } from '@/shared/components';
 import { useTheme } from '@react-navigation/native';
 import Colors from '@/constants/Colors';
+import { IconButton } from '../buttons';
 
 interface IProps {
 	placeholder?:string
@@ -23,7 +24,7 @@ export function InputPassword({
 		<View style={styles.container}>
 			<InputDefault 
 				textInputProps={{
-					placeholder:placeholder || 'Senha',
+					placeholder,
 					secureTextEntry:!passwordVisible,											
 					value,
 					onChangeText												
@@ -32,24 +33,18 @@ export function InputPassword({
 				style={styles.input}			
 			/>
 			{showPasswordButtonVisible ? (
-				<Pressable 
-					onPress={() => setPasswordVisible(!passwordVisible)}
-					unstable_pressDelay={100}
-					style={[{
-						backgroundColor:Colors[theme.dark ?'dark':'light'].button,
-						borderColor:Colors[theme.dark ?'dark':'light'].text,
-						borderBottomWidth:StyleSheet.hairlineWidth
-					},
-					styles.button]}
-				>
-					{({pressed})=>(
-						<MaterialIcon 
-							name={passwordVisible ? 'visibility' : 'visibility-off'} 
-							style={{opacity: pressed ? 0.6 : 1}}
-						/>
-					)}
-				</Pressable>
-
+				<View style={[styles.button,{					
+					borderColor: Colors[theme.dark ?'dark':'light'].text,
+					borderBottomWidth:StyleSheet.hairlineWidth
+				}]}>
+					<IconButton 
+						icon={{
+							name:passwordVisible ? 'visibility' : 'visibility-off',
+							color:passwordVisible ? Colors[theme.dark ?'dark':'light'].tint : undefined
+						}}
+						onPress={() => setPasswordVisible(!passwordVisible)}
+					/>
+				</View>					
 			) : null}			
 		</View>
 	);
@@ -64,13 +59,13 @@ const styles = StyleSheet.create({
 
 	input:{		
 		flex:1,
-		flexGrow:2,
+		flexGrow:2,		
 	},
 	
-	button:{	
-		paddingHorizontal:5,
-		alignItems:'center',
-		justifyContent:'center',	
-		height:'100%',				
+	button:{		
+		position:'absolute',
+		right:0,
+		height:50,
+		backgroundColor:'transparent',		
 	},
 });

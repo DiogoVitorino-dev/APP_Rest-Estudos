@@ -1,7 +1,7 @@
 import { Text as DefaultText, View as DefaultView } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 
 import Colors  from '@/constants/Colors';
-import { useTheme } from '@react-navigation/native';
 
 type ThemeProps = {
   lightColor?: string;
@@ -35,6 +35,9 @@ export function Text(props: TextProps) {
 export function View(props: ViewProps) {
 	const { style, lightColor, darkColor, ...otherProps } = props;  
 	const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
+	
+	const borderColor = useThemeColor({ light: lightColor, dark: darkColor }, 
+		'borderColor');
 
-	return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
+	return <DefaultView style={[{ backgroundColor, borderColor }, style]} {...otherProps} />;
 }

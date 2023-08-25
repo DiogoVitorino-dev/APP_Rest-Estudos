@@ -1,12 +1,11 @@
 import { TSettingsData } from '@/app/(drawer)/configuracoes';
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
-import { Link } from 'expo-router';
+import {Pressable, StyleSheet} from 'react-native';
 import { MaterialIcon, OpenText, StyledView, View } from '@/shared/components';
-import { ENamesPages } from '@/constants/ENamesPages';
 
 interface IProps {
-	item:TSettingsData
+	data:TSettingsData
+	onPress: (item:TSettingsData) => void
 	isFirstItem:boolean
 	isLastItem:boolean
 }
@@ -14,52 +13,60 @@ interface IProps {
 const lightColor = '#ccc';
 const darkColor = '#262626';
 
-export function SectionItem({item,isFirstItem,isLastItem}:IProps) {
-	return (		
-		<Link href={item.screen || `/${ENamesPages.paginaInicial}`}asChild>
-			<TouchableOpacity activeOpacity={0.85}>
-				<StyledView style={[
-					styles.container,
-					isFirstItem ? styles.firstItem : undefined,
-					isLastItem ? styles.lastItem : undefined,
-				]} lightColor={lightColor} darkColor={darkColor}>
-					<View lightColor={lightColor} darkColor={darkColor}>
-						<OpenText numberOfLines={1} style={styles.text}> 
-							{item.title} 
-						</OpenText>
+export function SectionItem({data,onPress,isFirstItem,isLastItem}:IProps) {
+	return (	
+		<Pressable onPress={() => onPress(data)}>				
+			<StyledView style={[
+				styles.container,
+				isFirstItem ? styles.firstItem : undefined,
+				isLastItem ? styles.lastItem : undefined,
+			]} lightColor={lightColor} darkColor={darkColor}>
+				<View style={styles.containerText}>
+					<OpenText numberOfLines={1} style={styles.text}> 
+						{data.title} 
+					</OpenText>
+					{data.subTitle ? (
 						<OpenText numberOfLines={1} style={[styles.text,styles.subTitle]}> 
-							{item.subTitle} 
+							{data.subTitle} 
 						</OpenText>
-					</View>					
-					<MaterialIcon name='chevron-right' size={30}  />		
-				</StyledView>
-			</TouchableOpacity>
-		</Link>
+					) : <></>}
+				</View>			
+				
+				<MaterialIcon  name='chevron-right' size={30}  />		
+			</StyledView>	
+		</Pressable>	
 		
 	);
 }
 
 const styles = StyleSheet.create({
-	container:{		
+	container:{
+		width:'100%',
 		minHeight:50,
-		height:60,		  
-		paddingHorizontal:30,		
-		flexDirection:'row',
+		justifyContent:'space-between',
 		alignItems:'center',
-		justifyContent:'space-between'	
+		paddingHorizontal:30,		
+		flexDirection:'row',	
 	},
-	text:{
-		fontSize:18,
-		marginVertical:2,		
+
+	containerText:{		
+		flexDirection:'column',
+		backgroundColor:'transparent',
+	},
+
+	text:{			
+		fontSize:18,			
 		fontWeight:'bold',
 		textTransform:'capitalize'	
 	},
+
 	subTitle:{
 		fontSize:12,		
 		fontWeight:'normal',
 		opacity:0.7,
 		textTransform:'none'
 	},
+		
 	firstItem:{
 		borderTopEndRadius:20,
 		borderTopStartRadius:20

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import {Modal, StyleSheet, View} from 'react-native';
+
 import { StyledView } from './StyledView';
-import { Button } from './Button';
 import { OpenText } from './StyledText';
 import { IMaterialIconProps, MaterialIcon } from './MaterialIcon';
+import { ConfirmButton } from '@/shared/buttons';
 
 interface IProps {
 	icon:IMaterialIconProps
 	message:string
 	visible:boolean
-	onDismiss: () => void
+	onDismiss?: () => void
 }
 
 export const SimpleModal = ({icon,message,visible,onDismiss}:IProps) => {
@@ -30,7 +31,7 @@ export const SimpleModal = ({icon,message,visible,onDismiss}:IProps) => {
 				<StyledView style={styles.modalView}>
 					<MaterialIcon {...icon} />
 					<OpenText style={[styles.modalText]}>{message}</OpenText>
-					<Button 
+					<ConfirmButton 
 						title='OK'						
 						onPress={() => setModalVisible(!modalVisible)} 
 						style={{width:80}}
@@ -52,12 +53,7 @@ const styles = StyleSheet.create({
 	modalView: {		
 		padding: 20,
 		alignItems: 'center',		
-	},
-	button: {
-		borderRadius: 20,
-		padding: 10,
-		elevation: 2,
-	},	
+	},		
 	modalText: {		
 		textAlign: 'center',
 		fontWeight:'bold',

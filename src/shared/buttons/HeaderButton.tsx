@@ -1,7 +1,9 @@
-import { Href, Link } from 'expo-router';
 import React from 'react';
+import { Href, Link } from 'expo-router';
 import {Pressable, StyleProp, TextStyle} from 'react-native';
-import { IMaterialIconProps, MaterialIcon } from './MaterialIcon';
+
+import { IMaterialIconProps, MaterialIcon } from '@/shared/components';
+
 interface IProps {
     href: Href<string>
     icon:IMaterialIconProps
