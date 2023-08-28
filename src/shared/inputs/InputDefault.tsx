@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import { TextInput, TextInputProps } from 'react-native-paper';
 import { MaterialIcon, Text, View } from '@/shared/components';

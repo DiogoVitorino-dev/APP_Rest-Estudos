@@ -1,15 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Colors from '@/constants/Colors';
 import { StyleSheet } from 'react-native';
 import { InputDetalhe } from '@/components/cidades';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { ModalError, SimpleModal, View } from '@/shared/components';
 import { useAppDispatch, useAppSelector } from '@/store/Hooks';
-import { cleanError, selectError } from '@/store/slices/CidadesSlice';
+import { cleanCidadesError } from '@/store/slices/CidadesSlice';
 import { updateCidade } from '@/store/thunks/CidadesThunks';
 import { useTheme } from '@react-navigation/native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCidadesContext } from '@/contexts/cidades';
+import { selectCidadesError } from '@/store/selectors/CidadesSelector';
+import { ICidade } from '@/models/Cidade';
 
 export default function Detalhe() {		
 	const [errorModalVisible,setErrorModalVisible] = useState<boolean>(false);
@@ -17,11 +19,21 @@ export default function Detalhe() {
 	const {nome,cleanContextStates} = useCidadesContext();
 
 	const dispatch = useAppDispatch();
-	const error = useAppSelector(selectError);
+	const error = useAppSelector(selectCidadesError);
 
 	const router = useRouter();
 	const {id} = useLocalSearchParams();
 	const theme = useTheme();
+
+	const handleDismissModalError = () => {		
+		setErrorModalVisible(false);
+		dispatch(cleanCidadesError());
+	};
+	
+	const handleDismissModal = () => {		
+		setModalVisible(false);
+		requestToGoBack();
+	};
 
 	useEffect(() => {
 		if (error)
@@ -29,8 +41,7 @@ export default function Detalhe() {
 	},[error]);
 
 	useEffect(() => {		
-		return () => {			
-			dispatch(cleanError());	
+		return () => {				
 			cleanContextStates();		
 		};
 	}, []);
@@ -40,21 +51,15 @@ export default function Detalhe() {
 	},[router]);
 	
 	const requestToUpdate = useCallback(async () => {	
-		if (typeof id === 'string') {	
-			await dispatch(
-				updateCidade({
-					id:Number(id), nome
-				})
-			).unwrap();
+		if (typeof id === 'string') {
+			const updatedCidade:ICidade = {id:Number(id), nome};
+
+			await dispatch(updateCidade(updatedCidade)).unwrap();
 
 			if (!error) setModalVisible(true);		
 		}			
 	}, [dispatch,id,error,nome]);
-	
-	const handleOnDismissModal = () => {		
-		setModalVisible(false);
-		requestToGoBack();
-	};
+
 
 	return (		
 		<View style={styles.container}>
@@ -65,7 +70,7 @@ export default function Detalhe() {
 			<ModalError 
 				visible={errorModalVisible}
 				error={error}
-				onDismiss={() => setErrorModalVisible(false)}
+				onDismiss={handleDismissModalError}
 			/>	
 			
 			<SimpleModal
@@ -76,7 +81,7 @@ export default function Detalhe() {
 					color:Colors[theme.dark ? 'dark' : 'light'].button
 				}}
 				message='Atualizado com sucesso!'
-				onDismiss={handleOnDismissModal}
+				onDismiss={handleDismissModal}
 			/>			
 		</View>		
 	);

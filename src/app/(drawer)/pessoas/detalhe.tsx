@@ -1,15 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Colors from '@/constants/Colors';
 import { StyleSheet } from 'react-native';
 import { InputDetalhe } from '@/components/pessoas';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { ModalError, SimpleModal, View } from '@/shared/components';
 import { useAppDispatch, useAppSelector } from '@/store/Hooks';
-import { cleanError, selectError } from '@/store/slices/PessoasSlice';
+import { cleanPessoasError } from '@/store/slices/PessoasSlice';
 import { updatePessoa } from '@/store/thunks/PessoasThunks';
 import { useTheme } from '@react-navigation/native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { usePessoasContext } from '@/contexts/pessoas';
+import { selectPessoasError } from '@/store/selectors/PessoasSelector';
 
 export default function Detalhe() {		
 	const [errorModalVisible,setErrorModalVisible] = useState<boolean>(false);
@@ -17,23 +18,11 @@ export default function Detalhe() {
 	const {cidadeid,email,nomeCompleto,cleanContextStates} = usePessoasContext();
 
 	const dispatch = useAppDispatch();
-	const error = useAppSelector(selectError);
+	const error = useAppSelector(selectPessoasError);
 
 	const router = useRouter();
 	const {id} = useLocalSearchParams();
 	const theme = useTheme();
-
-	useEffect(() => {
-		if (error)
-			setErrorModalVisible(true);
-	},[error]);
-
-	useEffect(() => {		
-		return () => {			
-			dispatch(cleanError());
-			cleanContextStates();
-		};
-	}, []);
 
 	const requestToGoBack = useCallback(() => {		
 		router.push(`/(drawer)/${ENamesPages.pessoas}`);		
@@ -54,10 +43,26 @@ export default function Detalhe() {
 		}			
 	}, [dispatch,id,cidadeid,email,nomeCompleto,error]);
 	
-	const handleOnDismissModal = () => {		
+	const handleDismissModal = () => {		
 		setModalVisible(false);
 		requestToGoBack();
 	};
+	
+	const handleDismissModalError = () => {		
+		setErrorModalVisible(false);
+		dispatch(cleanPessoasError());
+	};
+
+	useEffect(() => {
+		if (error)
+			setErrorModalVisible(true);
+	},[error]);
+
+	useEffect(() => {		
+		return () => {
+			cleanContextStates();
+		};
+	}, []);
 
 	return (		
 		<View style={styles.container}>
@@ -68,7 +73,7 @@ export default function Detalhe() {
 			<ModalError 
 				visible={errorModalVisible}
 				error={error}
-				onDismiss={() => setErrorModalVisible(false)}
+				onDismiss={handleDismissModalError}
 			/>	
 			
 			<SimpleModal
@@ -79,7 +84,7 @@ export default function Detalhe() {
 					color:Colors[theme.dark ? 'dark' : 'light'].button
 				}}
 				message='Atualizado com sucesso!'
-				onDismiss={handleOnDismissModal}
+				onDismiss={handleDismissModal}
 			/>			
 		</View>		
 	);

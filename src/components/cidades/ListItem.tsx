@@ -2,7 +2,7 @@ import Colors from '@/constants/Colors';
 import { ICidade } from '@/models/Cidade';
 import { IconButton } from '@/shared/buttons';
 import { OpenText, View } from '@/shared/components';
-import React from 'react';
+
 import {StyleSheet} from 'react-native';
 
 interface IProps {	

@@ -1,12 +1,13 @@
-import React from 'react';
+
+import {View, StyleSheet} from 'react-native';
+
 import { useCidadesContext } from '@/contexts/cidades';
 import { CancelButton, ConfirmButton } from '@/shared/buttons';
 import { OpenText } from '@/shared/components';
 import { InputNameCity } from '@/shared/inputs';
 import { useAppSelector } from '@/store/Hooks';
-import { selectStatus } from '@/store/slices/CidadesSlice';
-import {View, StyleSheet} from 'react-native';
 import { ICidade } from '@/models/Cidade';
+import { selectCidadesStatus } from '@/store/selectors/CidadesSelector';
 
 interface IProps {
 	requestToGoBack: () => void
@@ -15,7 +16,7 @@ interface IProps {
 
 export function InputNova({requestToCreate,requestToGoBack}:IProps) {	
 	const {nome,errorNome,setNome,validateFields} = useCidadesContext();
-	const status = useAppSelector(selectStatus);
+	const status = useAppSelector(selectCidadesStatus);
 
 	const beforeCreate = () => {
 		if(validateFields())

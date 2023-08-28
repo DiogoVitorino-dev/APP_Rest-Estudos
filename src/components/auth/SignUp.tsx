@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {StyleSheet} from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
@@ -8,8 +8,8 @@ import { ENamesPages } from '@/constants/ENamesPages';
 import { InputEmail, InputPassword, InputUsername } from '../../shared/inputs';
 import { useSignUpContext } from '@/contexts/auth';
 import { useAppSelector } from '@/store/Hooks';
-import { selectStatus } from '@/store/slices/AuthSlice';
 import { IUsuarioSignUp } from '@/models/Usuario';
+import { selectAuthStatus } from '@/store/selectors/AuthSelector';
 
 interface IProps {
 	onPressSignUp: (usuario:IUsuarioSignUp) => void
@@ -33,7 +33,7 @@ export function SignUp({onPressSignUp}:IProps) {
 	} = useSignUpContext();
 
 	const theme = useTheme();
-	const status = useAppSelector(selectStatus);
+	const status = useAppSelector(selectAuthStatus);
 
 	const beforeSignUp = () => {
 		if (validateFields()) 

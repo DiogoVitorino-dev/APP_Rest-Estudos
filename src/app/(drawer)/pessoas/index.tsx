@@ -6,8 +6,9 @@ import { List } from '@/components/pessoas';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { ModalError, View, ConfirmationModal } from '@/shared/components';
 import { useAppDispatch, useAppSelector } from '@/store/Hooks';
-import { cleanError, selectError, selectFilter, selectPessoas } from '@/store/slices/PessoasSlice';
+import { cleanPessoasError } from '@/store/slices/PessoasSlice';
 import { deletePessoa, fetchPessoas } from '@/store/thunks/PessoasThunks';
+import { selectPessoas, selectPessoasError, selectPessoasFilter } from '@/store/selectors/PessoasSelector';
 
 export default function Pessoas() {
 	const [selectedPessoa,setSelectedPessoa] = useState<IPessoa | null>(null);
@@ -17,19 +18,9 @@ export default function Pessoas() {
 	const router = useRouter();
 	const dispatch = useAppDispatch();
 	
-	const error = useAppSelector(selectError);
+	const error = useAppSelector(selectPessoasError);
 	const data = useAppSelector(selectPessoas);
-	const filter = useAppSelector(selectFilter);
-
-	useEffect(() => {
-		if (data.length <= 0 && !filter)		
-			dispatch(fetchPessoas());		
-	},[data]);
-
-	useEffect(() => {
-		if (error)
-			setErrorModalVisible(true);
-	},[error]);
+	const filter = useAppSelector(selectPessoasFilter);
 
 	const requestToDelete = (pessoa:IPessoa) => {
 		setConfirmModalVisible(true);
@@ -43,9 +34,9 @@ export default function Pessoas() {
 		}
 	},[selectedPessoa]);
 
-	const onDismissError = () => {
+	const handleDismissModalError = () => {
 		setErrorModalVisible(false);
-		dispatch(cleanError());
+		dispatch(cleanPessoasError());
 	};
 
 	const requestToEdit = ({id}:IPessoa) => {
@@ -58,6 +49,16 @@ export default function Pessoas() {
 	const requestToCreate = () => {
 		router.push(`/${ENamesPages.pessoas}/${ENamesPages.nova}`);
 	};
+
+	useEffect(() => {
+		if (data.length <= 0 && !filter)		
+			dispatch(fetchPessoas());		
+	},[data]);
+
+	useEffect(() => {
+		if (error)
+			setErrorModalVisible(true);
+	},[error]);
 	
 	return (		
 		<View style={styles.container}>
@@ -77,7 +78,7 @@ export default function Pessoas() {
 			<ModalError 
 				visible={errorModalVisible}
 				error={error} 
-				onDismiss={onDismissError} 
+				onDismiss={handleDismissModalError} 
 			/>
 		</View>	
 	);

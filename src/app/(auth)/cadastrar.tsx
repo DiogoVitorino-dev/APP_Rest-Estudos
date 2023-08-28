@@ -1,24 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { SignUp } from '@/components/auth';
 import { ModalError, View } from '@/shared/components';
 import { useAppDispatch, useAppSelector } from '@/store/Hooks';
 import { signIn, signUp } from '@/store/thunks/AuthThunks';
-import { selectError } from '@/store/slices/AuthSlice';
 import { IUsuarioSignUp } from '@/models/Usuario';
 import { SignUpProvider } from '@/contexts/auth';
+import { selectAuthError } from '@/store/selectors/AuthSelector';
+import { cleanAuthError } from '@/store/slices/AuthSlice';
 
 export default function Cadastrar() {	
 	const [modalVisible,setModalVisible] = useState<boolean>(true);
 
-	const error = useAppSelector(selectError);
+	const error = useAppSelector(selectAuthError);
 	const dispatch = useAppDispatch();
 
 	const handlePressSignUp = async (usuario:IUsuarioSignUp) => {
 		await dispatch(signUp(usuario)).unwrap();
 		if (!error) 
 			dispatch(signIn({...usuario}));
+	};
+
+	const handleDismissModalError = () => {
+		setModalVisible(false);
+		dispatch(cleanAuthError());
 	};
 
 	useEffect(()=>{
@@ -33,7 +39,7 @@ export default function Cadastrar() {
 				<ModalError 
 					error={error} 
 					visible={modalVisible} 
-					onDismiss={() => setModalVisible(!modalVisible)} />					
+					onDismiss={handleDismissModalError} />					
 			</View>	
 		</SignUpProvider>			
 	);

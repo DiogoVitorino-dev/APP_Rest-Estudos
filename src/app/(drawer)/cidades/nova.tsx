@@ -1,15 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Colors from '@/constants/Colors';
 import { StyleSheet } from 'react-native';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { useCidadesContext } from '@/contexts/cidades';
 import { ModalError, SimpleModal, View } from '@/shared/components';
 import { useAppDispatch, useAppSelector } from '@/store/Hooks';
-import { cleanError, selectError } from '@/store/slices/CidadesSlice';
+import { cleanCidadesError } from '@/store/slices/CidadesSlice';
 import { createCidade } from '@/store/thunks/CidadesThunks';
 import { useTheme } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import { InputNova } from '@/components/cidades';
+import { selectCidadesError } from '@/store/selectors/CidadesSelector';
 
 export default function Nova() {
 	const [errorModalVisible,setErrorModalVisible] = useState<boolean>(false);
@@ -20,19 +21,7 @@ export default function Nova() {
 	const theme = useTheme();
 
 	const dispatch = useAppDispatch();
-	const error = useAppSelector(selectError);
-
-	useEffect(() => {		
-		if (error)
-			setErrorModalVisible(true);
-	},[error]);
-
-	useEffect(() => {		
-		return () => {
-			dispatch(cleanError());
-			cleanContextStates();			
-		};
-	},[]);
+	const error = useAppSelector(selectCidadesError);
 
 	const requestToGoBack = useCallback(() => {		
 		router.push(`/(drawer)/${ENamesPages.cidades}`);		
@@ -45,10 +34,26 @@ export default function Nova() {
 		
 	},[dispatch,nome,error]);
 
-	const handleOnDismissModal = () => {		
+	const handleDismissModal = () => {		
 		setModalVisible(false);
 		requestToGoBack();
 	};
+
+	const handleDismissModalError = () => {
+		setErrorModalVisible(false);
+		dispatch(cleanCidadesError());
+	};
+
+	useEffect(() => {		
+		if (error)
+			setErrorModalVisible(true);
+	},[error]);
+
+	useEffect(() => {		
+		return () => {
+			cleanContextStates();			
+		};
+	},[]);
 
 	return (
 	 <View style={styles.container}>
@@ -59,7 +64,7 @@ export default function Nova() {
 			<ModalError 
 				visible={errorModalVisible}
 				error={error}
-				onDismiss={() => setErrorModalVisible(false)}
+				onDismiss={handleDismissModalError}
 			/>			
 			<SimpleModal
 				visible={modalVisible}
@@ -69,7 +74,7 @@ export default function Nova() {
 					color:Colors[theme.dark ? 'dark' : 'light'].button
 				}}
 				message='Criado com sucesso!'
-				onDismiss={handleOnDismissModal}
+				onDismiss={handleDismissModal}
 			/>		
 	 </View>
 	);

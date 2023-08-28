@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Colors from '@/constants/Colors';
 import {View, StyleSheet } from 'react-native';
 import { useTheme } from '@react-navigation/native';
@@ -12,11 +12,11 @@ import { CancelButton, ConfirmButton } from '@/shared/buttons';
 import { OpenText } from '@/shared/components';
 import { InputNameCity } from '@/shared/inputs';
 import { useAppDispatch, useAppSelector } from '@/store/Hooks';
-import { selectStatus } from '@/store/slices/PessoasSlice';
 import { usePessoasContext } from '@/contexts/pessoas';
 import { InputEmail } from '@/shared/inputs';
-import { selectCidades } from '@/store/slices/CidadesSlice';
 import { fetchNextPage, filterCidades } from '@/store/thunks/CidadesThunks';
+import { selectCidades } from '@/store/selectors/CidadesSelector';
+import { selectPessoasStatus } from '@/store/selectors/PessoasSelector';
 
 interface IProps {
 	requestToGoBack: () => void
@@ -36,7 +36,7 @@ export function InputNova({requestToCreate,requestToGoBack}:IProps) {
 		validateFields
 	} = usePessoasContext();
 
-	const status = useAppSelector(selectStatus);
+	const status = useAppSelector(selectPessoasStatus);
 	const data = useAppSelector(selectCidades);
 	const dispatch = useAppDispatch();
 	const theme = useTheme();

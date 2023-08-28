@@ -4,27 +4,26 @@ import { StyleSheet } from 'react-native';
 import { SignIn } from '@/components/auth';
 import { ModalError, View } from '@/shared/components';
 import { useAppDispatch, useAppSelector } from '@/store/Hooks';
-import { cleanError, selectError } from '@/store/slices/AuthSlice';
+import { cleanAuthError } from '@/store/slices/AuthSlice';
 import { signIn } from '@/store/thunks/AuthThunks';
 import { IUsuarioSignIn } from '@/models/Usuario';
 import { SignInProvider } from '@/contexts/auth';
+import { selectAuthError } from '@/store/selectors/AuthSelector';
 
 export default function Entrar() {	
 	const [modalVisible,setModalVisible] = useState<boolean>(true);
 
 	const dispatch = useAppDispatch();
-	const error = useAppSelector(selectError);
+	const error = useAppSelector(selectAuthError);
 
 	const handlePressLogin = (usuario:IUsuarioSignIn) => dispatch(signIn(usuario));
 
 	const handleDismissModalError = () => {
 		setModalVisible(false);
-		dispatch(cleanError());
+		dispatch(cleanAuthError());
 	};
 
-	useEffect(()=>{
-		console.log('a',error);
-		
+	useEffect(() => {
 		if (error) 
 			setModalVisible(true);
 	},[error]);

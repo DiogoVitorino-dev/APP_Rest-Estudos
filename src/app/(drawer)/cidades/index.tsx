@@ -7,8 +7,9 @@ import { ENamesPages } from '@/constants/ENamesPages';
 import { ICidade } from '@/models/Cidade';
 import { ModalError, View, ConfirmationModal } from '@/shared/components';
 import { useAppDispatch, useAppSelector } from '@/store/Hooks';
-import { cleanError, selectCidades, selectError, selectFilter } from '@/store/slices/CidadesSlice';
+import { cleanCidadesError } from '@/store/slices/CidadesSlice';
 import { deleteCidade, fetchCidades } from '@/store/thunks/CidadesThunks';
+import { selectCidades, selectCidadesError, selectCidadesFilter } from '@/store/selectors/CidadesSelector';
 
 export default function Cidades() {
 	const [selectedCidade,setSelectedCidade] = useState<ICidade | null>(null);
@@ -19,8 +20,8 @@ export default function Cidades() {
 	const dispatch = useAppDispatch();
 
 	const data = useAppSelector(selectCidades);	
-	const error = useAppSelector(selectError);	
-	const filter = useAppSelector(selectFilter);
+	const error = useAppSelector(selectCidadesError);	
+	const filter = useAppSelector(selectCidadesFilter);
 
 	useEffect(() => {
 		if (data.length <= 0 && !filter)	
@@ -49,9 +50,9 @@ export default function Cidades() {
 		}
 	},[selectedCidade]);
 
-	const onDismissError = () => {
+	const handleDismissModalError = () => {
 		setErrorModalVisible(false);
-		dispatch(cleanError());
+		dispatch(cleanCidadesError());
 	};
 
 	const requestToEdit = ({id}:ICidade) => {
@@ -83,7 +84,7 @@ export default function Cidades() {
 			<ModalError 
 				visible={errorModalVisible}
 				error={error} 
-				onDismiss={onDismissError} 
+				onDismiss={handleDismissModalError} 
 			/>
 		</View>	
 	);

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 
 import { Button } from './Button';

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Colors from '@/constants/Colors';
 import { StyleSheet } from 'react-native';
 import { IPessoa } from '@/models/Pessoa';

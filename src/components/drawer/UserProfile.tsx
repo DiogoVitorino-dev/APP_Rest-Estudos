@@ -1,11 +1,11 @@
-import React from 'react';
+
 import { StyleSheet } from 'react-native';
 import { Button, MaterialIcon, OpenText, View } from '@/shared/components';
 import Colors from '@/constants/Colors';
 import { useTheme } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '@/store/Hooks';
-import { selectStatus, selectUsuario } from '@/store/slices/AuthSlice';
 import { signOut } from '@/store/thunks/AuthThunks';
+import { selectAuthStatus, selectUsuario } from '@/store/selectors/AuthSelector';
 
 
 export default function UserProfile() {
@@ -13,7 +13,7 @@ export default function UserProfile() {
 	const dispatch = useAppDispatch();
 
 	const usuario = useAppSelector(selectUsuario);
-	const status = useAppSelector(selectStatus);
+	const status = useAppSelector(selectAuthStatus);
 
 	const handleOnPressSignOut = () => {
 		dispatch(signOut());

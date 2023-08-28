@@ -3,9 +3,17 @@ import { PessoasService } from '@/shared/api/pessoas';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '..';
 
-export const fetchPessoas = createAsyncThunk<IPessoa[],void,{state:RootState}>(
+interface IFetchPessoasFulfilled {
+	pessoas:IPessoa[]
+	xTotalCount:number
+}
+
+export const fetchPessoas = createAsyncThunk<IFetchPessoasFulfilled,void,{state:RootState}>(
 	'pessoas/fetchPessoas',
-	async () => await PessoasService.getAll({}),
+	async () => {
+		const {data,xTotalCount} = await PessoasService.getAll({});
+		return {pessoas:data,xTotalCount};
+	},
 	{
 		condition: (_,{getState}) => {
 			const {status} = getState().pessoas;
@@ -21,7 +29,8 @@ export const fetchNextPage = createAsyncThunk<IPessoa[],void,{state:RootState}>(
 	'pessoas/fetchNextPage',
 	async (_,{getState}) => {
 		const {page} = getState().pessoas;
-		return await PessoasService.getAll({page:page + 1});
+		const {data} = await PessoasService.getAll({page:page + 1});
+		return data;
 	},
 	{
 		condition: (_,{getState}) => {
@@ -35,17 +44,21 @@ export const fetchNextPage = createAsyncThunk<IPessoa[],void,{state:RootState}>(
 );
 
 interface IFilterPessoasFulfilled {	
-	response: IPessoa[]
+	pessoas: IPessoa[]
 	filter?:string
 }
 
 export const filterPessoas = 
 	createAsyncThunk<IFilterPessoasFulfilled,string,{state:RootState}>(
 		'pessoas/filterPessoas',
-		async (filter:string) => ({			
-			response: await PessoasService.getAll({filter,page:1}),
-			filter: filter ? filter : undefined
-		}),
+		async (filter:string) => {
+			const {data} = await PessoasService.getAll({filter,page:1});
+			
+			return {
+				pessoas:data,
+				filter:filter ? filter : undefined
+			};
+		},
 		{
 			condition: (_,{getState}) => {
 				const {status} = getState().pessoas;

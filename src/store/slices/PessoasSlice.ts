@@ -1,11 +1,11 @@
 import { createSlice, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
-import { RootState } from '..';
 import { createPessoa, deletePessoa, fetchPessoas, fetchNextPage, updatePessoa, filterPessoas } from '../thunks/PessoasThunks';
 import { IPessoa } from '@/models';
 
 interface IInitialState {
 	pessoas: IPessoa[]
 	filter?:string
+	totalCount:number
 	page:number
 	status: 'idle' | 'loading' | 'succeeded' | 'failed'
 	error?: string
@@ -13,6 +13,7 @@ interface IInitialState {
 
 const initialState:IInitialState = {
 	pessoas:[],
+	totalCount:0,
 	page:1,
 	status:'idle',	
 };
@@ -31,35 +32,39 @@ const pessoasSlice = createSlice({
 	name:'pessoas',
 	initialState,
 	reducers:{
-		refresh(state) {
+		refreshPessoas(state) {
 			state.page = 1;
 			state.filter = undefined;
+			state.totalCount = 0;
 			state.pessoas = [];
 			state.status = 'idle';
 		},
-		cleanError(state) {
+		cleanPessoasError(state) {
 			state.error = undefined;			
 		}
 	},
 	extraReducers(builder) {
 		builder			
 			.addCase(fetchPessoas.fulfilled, (state,action) => {
-				state.pessoas = action.payload;								
+				state.pessoas = action.payload.pessoas;							
+				state.totalCount = action.payload.xTotalCount;
 			})			
 			.addCase(fetchNextPage.fulfilled, (state,action) => {
 				state.pessoas = state.pessoas.concat(action.payload);
 				state.page += 1;						
 			})
 			.addCase(filterPessoas.fulfilled, (state,action) => {
-				state.pessoas = action.payload.response;
+				state.pessoas = action.payload.pessoas;
 				state.filter = action.payload.filter;
 				state.page = 1;										
 			})		
 			.addCase(deletePessoa.fulfilled, (state,action) => {
-				state.pessoas = state.pessoas.filter(pessoa => pessoa.id !== action.payload);	
+				state.pessoas = state.pessoas.filter(pessoa => pessoa.id !== action.payload);
+				state.totalCount = state.totalCount - 1;
 			})
 			.addCase(createPessoa.fulfilled, (state,action) => {
 				state.pessoas.unshift(action.payload);
+				state.totalCount = state.totalCount + 1;
 			})
 			.addCase(updatePessoa.fulfilled, (state,action) => {
 				state.pessoas = state.pessoas.map(prevPessoa => (
@@ -81,11 +86,9 @@ const pessoasSlice = createSlice({
 	},
 });
 
-export const selectPessoas = (state: RootState) => state.pessoas.pessoas;
-export const selectStatus = (state: RootState) => state.pessoas.status;
-export const selectFilter = (state: RootState) => state.pessoas.filter;
-export const selectError = (state: RootState) => state.pessoas.error;
-
-export const { cleanError, refresh } = pessoasSlice.actions;
+export const { 
+	cleanPessoasError, 
+	refreshPessoas 
+} = pessoasSlice.actions;
 
 export default pessoasSlice.reducer;

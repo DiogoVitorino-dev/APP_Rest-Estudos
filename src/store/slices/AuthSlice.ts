@@ -1,5 +1,4 @@
 import { createSlice, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
-import { RootState } from '..';
 import { IUsuario } from '@/models/Usuario';
 import { recoverySaved, signIn, signOut, signUp } from '../thunks/AuthThunks';
 
@@ -21,7 +20,7 @@ const AuthSlice = createSlice({
 	name:'auth',
 	initialState,
 	reducers:{		
-		cleanError(state) {
+		cleanAuthError(state) {
 			state.error = undefined;
 		}
 	},
@@ -49,10 +48,6 @@ const AuthSlice = createSlice({
 	},
 });
 
-export const selectUsuario = (state: RootState) => state.auth.usuario;
-export const selectStatus = (state: RootState) => state.auth.status;
-export const selectError = (state: RootState) => state.auth.error;
-
-export const { cleanError } = AuthSlice.actions;
+export const { cleanAuthError } = AuthSlice.actions;
 
 export default AuthSlice.reducer;

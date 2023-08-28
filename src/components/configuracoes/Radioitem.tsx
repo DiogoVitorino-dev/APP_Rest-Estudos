@@ -1,7 +1,7 @@
 import Colors from '@/constants/Colors';
 import { View } from '@/shared/components';
 import { useTheme } from '@react-navigation/native';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 

@@ -1,5 +1,4 @@
 import { View } from '@/shared/components';
-import React from 'react';
 import {Image} from 'react-native';
 
 const ImageApp = require('@/assets/images/adaptive-icon.png');

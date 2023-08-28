@@ -1,16 +1,16 @@
-import React from 'react';
+
 import { StyleSheet } from 'react-native';
 import { OpenText, View } from '@/shared/components';
 import { InputEmail, InputNameCity } from '@/shared/inputs';
 import { CancelButton, ConfirmButton } from '@/shared/buttons';
 import { useAppDispatch, useAppSelector } from '@/store/Hooks';
-import { selectStatus } from '@/store/slices/PessoasSlice';
 import { usePessoasContext } from '@/contexts/pessoas';
-import { selectCidades } from '@/store/slices/CidadesSlice';
 import { useTheme } from '@react-navigation/native';
 import { TAutocompleteDropdownItem,AutocompleteDropdown, AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown';
 import { fetchNextPage, filterCidades } from '@/store/thunks/CidadesThunks';
 import Colors from '@/constants/Colors';
+import { selectCidades } from '@/store/selectors/CidadesSelector';
+import { selectPessoasStatus } from '@/store/selectors/PessoasSelector';
 
 interface IProps {
 	requestToUpdate: () => void
@@ -30,7 +30,7 @@ export function InputDetalhe({requestToGoBack,requestToUpdate}:IProps) {
 		validateFields
 	} = usePessoasContext();
 
-	const status = useAppSelector(selectStatus);
+	const status = useAppSelector(selectPessoasStatus);
 	const data = useAppSelector(selectCidades);
 	const dispatch = useAppDispatch();
 	const theme = useTheme();

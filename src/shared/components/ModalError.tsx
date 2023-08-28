@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { SimpleModal } from '@/shared/components';
 
 interface IProps {

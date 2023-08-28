@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useTheme } from '@react-navigation/native';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 

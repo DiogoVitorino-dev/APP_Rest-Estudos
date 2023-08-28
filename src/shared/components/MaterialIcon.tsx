@@ -1,10 +1,11 @@
-import React from 'react';
+
 import { OpaqueColorValue, StyleProp, TextStyle } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import Colors  from '@/constants/Colors';
-import { TMaterialIconNames } from '@/constants/Types';
+
+export type TMaterialIconNames = keyof typeof MaterialIcons.glyphMap
 
 export interface IMaterialIconProps {
 	name: TMaterialIconNames

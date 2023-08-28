@@ -8,8 +8,13 @@ interface IGetProps {
 	filter?:string
 }
 
-export const getAll = async ({page,filter}:IGetProps):Promise<IPessoa[]> => {			
-	const {data} = await AxiosAPI.get('/pessoas',{
+interface IGetResponse {
+	data:IPessoa[]
+	xTotalCount:number
+}
+
+export const getAll = async ({page,filter}:IGetProps):Promise<IGetResponse> => {			
+	const {data,headers} = await AxiosAPI.get('/pessoas',{
 		headers:{
 			Authorization:`Bearer ${await getValueSafety(GenericEnum.secureKeyToken)}`
 		},
@@ -17,7 +22,9 @@ export const getAll = async ({page,filter}:IGetProps):Promise<IPessoa[]> => {
 	});
 	
 
-	if (data) return data as IPessoa[];
+	if (data && headers['x-total-count']) {
+		return {data,xTotalCount:headers['x-total-count']};
+	}
 
 	throw 'Error ao consultar os registros';
 };

@@ -1,12 +1,12 @@
-import React from 'react';
+
 import { StyleSheet, FlatList } from 'react-native';
 import { HeaderList } from './HeaderList';
 import { EmptyListFeedback, View } from '@/shared/components';
 import { ListItem } from './ListItem';
 import { IPessoa } from '@/models/Pessoa';
 import { useAppDispatch, useAppSelector } from '@/store/Hooks';
-import { selectPessoas, selectStatus } from '@/store/slices/PessoasSlice';
 import { fetchNextPage } from '@/store/thunks/PessoasThunks';
+import { selectPessoas, selectPessoasStatus } from '@/store/selectors/PessoasSelector';
 
 interface IProps {
 	requestToCreate: () => void
@@ -16,7 +16,7 @@ interface IProps {
 
 export function List({requestToDelete,requestToEdit}:IProps) {
 	const data = useAppSelector(selectPessoas);
-	const status = useAppSelector(selectStatus);
+	const status = useAppSelector(selectPessoasStatus);
 	const dispatch = useAppDispatch();
 	
 	const handleOnPressDelete = (item:IPessoa) => requestToDelete(item);

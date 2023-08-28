@@ -1,10 +1,10 @@
 import { ICidade } from '@/models/Cidade';
 import { createSlice, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
-import { RootState } from '..';
 import { createCidade, deleteCidade, fetchCidades, fetchNextPage, filterCidades, updateCidade } from '../thunks/CidadesThunks';
 
 interface IInitialState {
-	cidades: ICidade[]	
+	cidades: ICidade[]
+	totalCount: number
 	page:number
 	filter?:string
 	status: 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -14,6 +14,7 @@ interface IInitialState {
 const initialState:IInitialState = {
 	cidades:[],
 	page:1,
+	totalCount:0,
 	status:'idle',	
 };
 
@@ -31,23 +32,25 @@ const cidadesSlice = createSlice({
 	name:'cidades',
 	initialState,
 	reducers:{
-		refresh(state) {
+		refreshCidades(state) {
 			state.page = 1;
+			state.totalCount = 0;
 			state.filter = undefined;
 			state.cidades = [];
 			state.status = 'idle';			
 		},
-		cleanError(state) {
+		cleanCidadesError(state) {
 			state.error = undefined;
 		}
 	},
 	extraReducers(builder) {
 		builder			
 			.addCase(fetchCidades.fulfilled, (state,action) => {
-				state.cidades = action.payload;								
+				state.cidades = action.payload.cidades;
+				state.totalCount = action.payload.xTotalCount;						
 			})
 			.addCase(filterCidades.fulfilled, (state,action) => {
-				state.cidades = action.payload.response;
+				state.cidades = action.payload.cidades;
 				state.filter = action.payload.filter;
 				state.page = 1;										
 			})			
@@ -56,10 +59,12 @@ const cidadesSlice = createSlice({
 				state.page += 1;						
 			})	
 			.addCase(deleteCidade.fulfilled, (state,action) => {
-				state.cidades = state.cidades.filter(cidade => cidade.id !== action.payload);	
+				state.cidades = state.cidades.filter(cidade => cidade.id !== action.payload);
+				state.totalCount = state.totalCount - 1;
 			})
 			.addCase(createCidade.fulfilled, (state,action) => {
 				state.cidades.unshift(action.payload);
+				state.totalCount = state.totalCount + 1;
 			})			
 			.addCase(updateCidade.fulfilled, (state,action) => {
 				state.cidades = state.cidades.map(prevCidade => (
@@ -81,11 +86,9 @@ const cidadesSlice = createSlice({
 	},
 });
 
-export const selectCidades = (state: RootState) => state.cidades.cidades;
-export const selectStatus = (state: RootState) => state.cidades.status;
-export const selectFilter = (state: RootState) => state.cidades.filter;
-export const selectError = (state: RootState) => state.cidades.error;
-
-export const { cleanError, refresh } = cidadesSlice.actions;
+export const { 
+	cleanCidadesError, 
+	refreshCidades 
+} = cidadesSlice.actions;
 
 export default cidadesSlice.reducer;

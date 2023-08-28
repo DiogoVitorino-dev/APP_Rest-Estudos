@@ -3,9 +3,18 @@ import { CidadesService } from '@/shared/api/cidades';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '..';
 
-export const fetchCidades = createAsyncThunk<ICidade[],void,{state:RootState}>(
+interface IFetchCidadesFulfilled {
+	cidades:ICidade[]
+	xTotalCount:number
+}
+
+export const fetchCidades =
+createAsyncThunk<IFetchCidadesFulfilled,void,{state:RootState}>(
 	'cidades/fetchCidades',
-	async () => await CidadesService.getAll({}),
+	async () => {
+		const {data,xTotalCount} = await CidadesService.getAll({});
+		return {cidades:data, xTotalCount};
+	},
 	{
 		condition: (_,{getState}) => {
 			const {status} = getState().cidades;
@@ -18,17 +27,21 @@ export const fetchCidades = createAsyncThunk<ICidade[],void,{state:RootState}>(
 );
 
 interface IFilterCidadesFulfilled {	
-	response: ICidade[]
+	cidades: ICidade[]
 	filter?:string
 }
 
 export const filterCidades = 
 	createAsyncThunk<IFilterCidadesFulfilled,string,{state:RootState}>(
 		'cidades/filterCidades',
-		async (filter:string) => ({			
-			response: await CidadesService.getAll({filter,page:1}),
-			filter: filter ? filter : undefined
-		}),
+		async (filter:string) => {	
+			const {data} = await CidadesService.getAll({filter,page:1});
+					
+			return {
+				cidades:data,
+				filter: filter ? filter : undefined
+			};			
+		},
 		{
 			condition: (_,{getState}) => {
 				const {status} = getState().cidades;
@@ -43,8 +56,9 @@ export const filterCidades =
 export const fetchNextPage = createAsyncThunk<ICidade[],void,{state:RootState}>(
 	'cidades/fetchNextPage',
 	async (_,{getState}) => {
-		const {page,filter} = getState().cidades;		
-		return await CidadesService.getAll({page:page + 1,filter});		
+		const {page,filter} = getState().cidades;
+		const {data} = await CidadesService.getAll({page:page + 1,filter});		
+		return data;		
 	},
 	{
 		condition: (_,{getState}) => {

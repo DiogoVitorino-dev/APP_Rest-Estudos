@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { StyleProp, ViewStyle } from 'react-native';
 import { IconButton as IconButtonPaper } from 'react-native-paper';
 

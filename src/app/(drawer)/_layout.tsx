@@ -1,15 +1,14 @@
+import { useCallback } from 'react';
 import { Drawer } from 'expo-router/drawer';
-
-import {  MaterialIcon } from '@/shared/components';
 import { Platform, useWindowDimensions } from 'react-native';
+import { useTheme } from '@react-navigation/native';
+import { DrawerContent, DrawerContentComponentProps } from '@react-navigation/drawer';
+
 import Colors  from '@/constants/Colors';
+import UserProfile from '@/components/drawer/UserProfile';
+import { MaterialIcon, TMaterialIconNames } from '@/shared/components';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { ELabelsPages } from '@/constants/ELabelsPages';
-import UserProfile from '@/components/drawer/UserProfile';
-import { DrawerContent, DrawerContentComponentProps } from '@react-navigation/drawer';
-import { useTheme } from '@react-navigation/native';
-import { TMaterialIconNames } from '@/constants/Types';
-import { useCallback } from 'react';
 import { HeaderButton } from '@/shared/buttons';
 
 const headerRight = () => (
@@ -43,7 +42,8 @@ export default function DrawerLayout() {
 			headerRight,					
 			drawerActiveTintColor:Colors[theme.dark ? 'dark' : 'light'].drawerActive,
 			drawerLabelStyle:{color:Colors[theme.dark ? 'dark' : 'light'].text},
-			headerTintColor:Colors[theme.dark ? 'dark' : 'light'].iconDefault,		
+			headerTintColor:Colors[theme.dark ? 'dark' : 'light'].iconDefault,
+			drawerStyle:{maxWidth:250}, 
 			drawerType: adaptiveScreen() ? 'permanent' : 'slide',
 			headerLeft: adaptiveScreen() ?  () => (<></>) : undefined,			
 		}}

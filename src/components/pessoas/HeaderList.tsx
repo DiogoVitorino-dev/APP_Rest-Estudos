@@ -1,10 +1,10 @@
-import React from 'react';
+
 import {StyleSheet} from 'react-native';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { IconButton } from '@/shared/buttons';
 import { OpenText, View } from '@/shared/components';
 import { useAppDispatch } from '@/store/Hooks';
-import { refresh } from '@/store/slices/PessoasSlice';
+import { refreshPessoas } from '@/store/slices/PessoasSlice';
 import { useRouter } from 'expo-router';
 
 export function HeaderList() {
@@ -12,7 +12,7 @@ export function HeaderList() {
 	const dispatch = useAppDispatch();
 	
 	const handleOnPressRefresh = () => {		
-		dispatch(refresh());		
+		dispatch(refreshPessoas());		
 	};
 
 	const navigateToNewCity = () => {

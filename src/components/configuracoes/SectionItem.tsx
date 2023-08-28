@@ -1,5 +1,5 @@
 import { TSettingsData } from '@/app/(drawer)/configuracoes';
-import React from 'react';
+
 import {Pressable, StyleSheet} from 'react-native';
 import { MaterialIcon, OpenText, StyledView, View } from '@/shared/components';
 

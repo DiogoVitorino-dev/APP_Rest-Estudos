@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {StyleProp, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { Button as ButtonPaper } from 'react-native-paper';

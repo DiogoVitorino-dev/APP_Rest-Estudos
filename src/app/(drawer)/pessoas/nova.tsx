@@ -1,17 +1,18 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Colors from '@/constants/Colors';
 import { StyleSheet } from 'react-native';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { usePessoasContext } from '@/contexts/pessoas';
 import { ModalError, SimpleModal, View } from '@/shared/components';
 import { useAppDispatch, useAppSelector } from '@/store/Hooks';
-import { cleanError, refresh, selectError } from '@/store/slices/PessoasSlice';
+import { cleanPessoasError, refreshPessoas } from '@/store/slices/PessoasSlice';
 import { createPessoa } from '@/store/thunks/PessoasThunks';
 import { useTheme } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import { InputNova } from '@/components/pessoas';
-import { selectCidades } from '@/store/slices/CidadesSlice';
 import { fetchCidades } from '@/store/thunks/CidadesThunks';
+import { selectCidades } from '@/store/selectors/CidadesSelector';
+import { selectPessoasError } from '@/store/selectors/PessoasSelector';
 
 export default function Nova() {
 	const [errorModalVisible,setErrorModalVisible] = useState<boolean>(false);
@@ -23,25 +24,7 @@ export default function Nova() {
 
 	const dispatch = useAppDispatch();	
 	const data = useAppSelector(selectCidades);
-	const error = useAppSelector(selectError);
-
-	useEffect(() => {
-		if (data.length <= 0)		
-			dispatch(fetchCidades());		
-	},[data]);
-
-	useEffect(() => {		
-		if (error)
-			setErrorModalVisible(true);
-	},[error]);
-
-	useEffect(() => {
-		dispatch(refresh());
-		return () => {
-			dispatch(cleanError());
-			cleanContextStates();
-		};
-	},[]);
+	const error = useAppSelector(selectPessoasError);
 
 	const requestToGoBack = useCallback(() => {		
 		router.push(`/(drawer)/${ENamesPages.pessoas}`);		
@@ -54,10 +37,32 @@ export default function Nova() {
 		
 	},[dispatch,nomeCompleto,cidadeid,email,error]);
 
-	const handleOnDismissModal = () => {		
+	const handleDismissModal = () => {		
 		setModalVisible(false);
 		requestToGoBack();
 	};
+	
+	const handleDismissModalError = () => {		
+		setErrorModalVisible(false);
+		dispatch(cleanPessoasError());
+	};
+
+	useEffect(() => {
+		if (data.length <= 0)		
+			dispatch(fetchCidades());		
+	},[data]);
+
+	useEffect(() => {		
+		if (error)
+			setErrorModalVisible(true);
+	},[error]);
+
+	useEffect(() => {
+		dispatch(refreshPessoas());
+		return () => {			
+			cleanContextStates();
+		};
+	},[]);
 
 	return (
 	 <View style={styles.container}>
@@ -68,7 +73,7 @@ export default function Nova() {
 			<ModalError 
 				visible={errorModalVisible}
 				error={error}
-				onDismiss={() => setErrorModalVisible(false)}
+				onDismiss={handleDismissModalError}
 			/>			
 			<SimpleModal
 				visible={modalVisible}
@@ -78,7 +83,7 @@ export default function Nova() {
 					color:Colors[theme.dark ? 'dark' : 'light'].button
 				}}
 				message='Criado com sucesso!'
-				onDismiss={handleOnDismissModal}
+				onDismiss={handleDismissModal}
 			/>		
 	 </View>
 	);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {View, StyleSheet, useWindowDimensions, Platform} from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { Searchbar } from 'react-native-paper';

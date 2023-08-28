@@ -1,6 +1,6 @@
 import { ICidade } from '@/models/Cidade';
 import * as yup from 'yup';
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import { ValidationYup } from '@/shared/services/validation/yup';
 
 type TOmitICidade = Omit<ICidade, 'id'>

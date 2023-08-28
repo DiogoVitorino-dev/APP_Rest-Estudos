@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { InputDefault } from './InputDefault';
 import { View } from '@/shared/components';

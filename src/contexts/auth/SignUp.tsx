@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import * as yup from 'yup';
 import { IUsuarioSignUp } from '@/models/Usuario';
 import { ValidationYup } from '@/shared/services/validation/yup';

@@ -1,12 +1,12 @@
-import React from 'react';
+
 import { StyleSheet, FlatList } from 'react-native';
 import { HeaderList } from './HeaderList';
 import { EmptyListFeedback, View } from '@/shared/components';
 import { ListItem } from './ListItem';
 import { ICidade } from '@/models/Cidade';
 import { useAppDispatch, useAppSelector } from '@/store/Hooks';
-import { selectCidades } from '@/store/slices/CidadesSlice';
 import { fetchNextPage } from '@/store/thunks/CidadesThunks';
+import { selectCidades } from '@/store/selectors/CidadesSelector';
 
 interface IProps {
 	requestToCreate: () => void

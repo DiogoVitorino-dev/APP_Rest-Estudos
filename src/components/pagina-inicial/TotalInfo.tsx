@@ -1,5 +1,5 @@
 import { OpenText, StyledView } from '@/shared/components';
-import React from 'react';
+
 import { StyleSheet } from 'react-native';
 
 interface IProps {

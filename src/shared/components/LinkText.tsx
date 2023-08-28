@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Href, Link } from 'expo-router';
 import {StyleProp, TextStyle} from 'react-native';
 

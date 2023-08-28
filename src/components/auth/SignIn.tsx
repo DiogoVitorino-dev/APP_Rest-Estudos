@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {StyleSheet} from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
@@ -8,8 +8,8 @@ import { ENamesPages } from '@/constants/ENamesPages';
 import { useSignInContext } from '@/contexts/auth';
 import { InputEmail, InputPassword } from '../../shared/inputs';
 import { useAppSelector } from '@/store/Hooks';
-import { selectStatus } from '@/store/slices/AuthSlice';
 import { IUsuarioSignIn } from '@/models/Usuario';
+import { selectAuthStatus } from '@/store/selectors/AuthSelector';
 
 interface IProps {
 	onPressLogin: (user:IUsuarioSignIn) => void
@@ -26,7 +26,7 @@ export function SignIn({onPressLogin}:IProps) {
 		validateFields
 	} = useSignInContext();
 	
-	const status = useAppSelector(selectStatus);
+	const status = useAppSelector(selectAuthStatus);
 	const theme = useTheme();
 
 	const beforeLogin = () => {

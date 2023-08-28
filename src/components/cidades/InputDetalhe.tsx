@@ -1,11 +1,11 @@
-import React from 'react';
+
 import { OpenText, View } from '@/shared/components';
 import { InputNameCity } from '@/shared/inputs';
 import {StyleSheet} from 'react-native';
 import { CancelButton, ConfirmButton } from '@/shared/buttons';
 import { useCidadesContext } from '@/contexts/cidades';
 import { useAppSelector } from '@/store/Hooks';
-import { selectStatus } from '@/store/slices/CidadesSlice';
+import { selectCidadesStatus } from '@/store/selectors/CidadesSelector';
 
 interface IProps {
 	requestToUpdate: () => void
@@ -14,7 +14,7 @@ interface IProps {
 
 export function InputDetalhe({requestToGoBack,requestToUpdate}:IProps) {
 	const {nome,setNome,validateFields,errorNome} = useCidadesContext();
-	const status = useAppSelector(selectStatus);
+	const status = useAppSelector(selectCidadesStatus);
 
 	const beforeUpdate = () => {
 		if(validateFields())
