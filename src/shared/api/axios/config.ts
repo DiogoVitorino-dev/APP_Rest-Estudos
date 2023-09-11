@@ -1,7 +1,8 @@
+import Configuration from '@/constants/Configuration';
 import axios from 'axios';
 
 const AxiosAPI = axios.create({
-	baseURL:process.env.BASE_URL,		
+	baseURL:Configuration.BASE_URL,		
 });
 
 AxiosAPI.interceptors.response.use(

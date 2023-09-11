@@ -5,15 +5,20 @@ interface IJwtDecode {
 	exp: number;
 }
 
-export const TokenExpired = (token:string | null):boolean => {
-	if (token === null) return true;
+export const TokenExpired = (token?:string | null):boolean => {
+	try {
+		if (!token || token === 'undefined')
+			return true;
+		
+		const decodedToken = jwtDecode<IJwtDecode>(token);
+		const currentDate = new Date();
+		
+		if (decodedToken.exp < currentDate.getTime())
+			return false;		
 
-	const decodedToken = jwtDecode<IJwtDecode>(token);
-	const currentDate = new Date();
+		return true;		
+	} catch (error) {
+		return true;		
+	}
 	
-	if (decodedToken.exp < currentDate.getTime())
-		return false;
-	
-
-	return true;
 };

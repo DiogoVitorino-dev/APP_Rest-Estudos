@@ -2,6 +2,7 @@ import { getValueSafety } from '@/shared/services/secureStorage';
 import { AxiosAPI } from '../axios/config';
 import { GenericEnum } from '@/constants/GenericEnum';
 import { IPessoa } from '@/models';
+import Configuration from '@/constants/Configuration';
 
 interface IGetProps {
 	page?:number
@@ -18,7 +19,7 @@ export const getAll = async ({page,filter}:IGetProps):Promise<IGetResponse> => {
 		headers:{
 			Authorization:`Bearer ${await getValueSafety(GenericEnum.secureKeyToken)}`
 		},
-		params:{page,filter,limit:process.env.LIMIT_GET_ITEMS}
+		params:{page,filter,limit:Configuration.LIMIT_GET_ITEMS}
 	});
 	
 
