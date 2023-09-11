@@ -42,3 +42,5 @@ expo-env.d.ts
 
 #Node
 .env
+# Local Netlify folder
+.netlify

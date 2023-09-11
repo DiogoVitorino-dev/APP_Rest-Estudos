@@ -7,20 +7,25 @@ const AxiosAPI = axios.create({
 AxiosAPI.interceptors.response.use(
 	response => response,
 	err => {
-		let error = new Error('Ocorreu um erro, tente novamente mais tarde');
+		try {
+			let error = new Error('Ocorreu um erro, tente novamente mais tarde');
 				
-		switch (err.message) {
-			case 'Network Error':
-				error = new Error('Error de conexão, tente novamente mais tarde.');
-				break;		
-		
-			default:
-				if (err.response.data.errors.default)						
-					error = new Error(err.response.data.errors.default);				
-				break;			
-		}
+			switch (err.message) {
+				case 'Network Error':
+					error = new Error('Error de conexão, tente novamente mais tarde.');
+					break;		
+			
+				default:
+					if (err.response.data.errors)				
+						if (err.response.data.errors.default)				
+							error = new Error(err.response.data.errors.default);				
+					break;			
+			}
 
-		return Promise.reject(error);
+			return Promise.reject(error);			
+		} catch (error) {
+			return Promise.reject(new Error('Ocorreu um erro, tente novamente mais tarde'));			
+		}		
 	}
 );
 
