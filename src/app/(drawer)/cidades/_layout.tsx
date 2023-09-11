@@ -5,7 +5,7 @@ import { Stack, useNavigation } from 'expo-router';
 import { useLayoutEffect } from 'react';
 import { CidadesProvider } from '@/contexts/cidades';
 import { ENamesPages } from '@/constants/ENamesPages';
-import { useAppDispatch } from '@/store/Hooks';
+import { useAppDispatch } from '@/shared/hooks/redux';
 import { filterCidades } from '@/store/thunks/CidadesThunks';
 import { HeaderLeft } from '@/shared/components';
 

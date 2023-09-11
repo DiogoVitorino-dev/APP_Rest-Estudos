@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import * as yup from 'yup';
-import { IUsuarioSignUp } from '@/models/Usuario';
+import { IUsuarioSignUp } from '@/models';
 import { ValidationYup } from '@/shared/services/validation/yup';
 
 interface ISignUpContext extends IUsuarioSignUp{	

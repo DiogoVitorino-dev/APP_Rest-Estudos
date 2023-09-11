@@ -5,7 +5,7 @@ import { IPessoa } from '@/models';
 import { List } from '@/components/pessoas';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { ModalError, View, ConfirmationModal } from '@/shared/components';
-import { useAppDispatch, useAppSelector } from '@/store/Hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { cleanPessoasError } from '@/store/slices/PessoasSlice';
 import { deletePessoa, fetchPessoas } from '@/store/thunks/PessoasThunks';
 import { selectPessoas, selectPessoasError, selectPessoasFilter } from '@/store/selectors/PessoasSelector';

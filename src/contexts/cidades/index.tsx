@@ -1,4 +1,4 @@
-import { ICidade } from '@/models/Cidade';
+import { ICidade } from '@/models';
 import * as yup from 'yup';
 import { createContext, useContext, useMemo, useState } from 'react';
 import { ValidationYup } from '@/shared/services/validation/yup';

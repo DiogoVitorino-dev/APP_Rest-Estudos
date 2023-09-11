@@ -4,7 +4,7 @@ import { InputNameCity } from '@/shared/inputs';
 import {StyleSheet} from 'react-native';
 import { CancelButton, ConfirmButton } from '@/shared/buttons';
 import { useCidadesContext } from '@/contexts/cidades';
-import { useAppSelector } from '@/store/Hooks';
+import { useAppSelector } from '@/shared/hooks/redux';
 import { selectCidadesStatus } from '@/store/selectors/CidadesSelector';
 
 interface IProps {

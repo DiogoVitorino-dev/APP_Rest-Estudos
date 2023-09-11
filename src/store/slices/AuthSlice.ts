@@ -1,5 +1,5 @@
 import { createSlice, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
-import { IUsuario } from '@/models/Usuario';
+import { IUsuario } from '@/models';
 import { recoverySaved, signIn, signOut, signUp } from '../thunks/AuthThunks';
 
 interface IInitialState {

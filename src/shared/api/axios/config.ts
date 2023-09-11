@@ -1,23 +1,31 @@
 import axios from 'axios';
 
+export const RequestConfig = {
+	BASE_URL:'https://apirestestudos-diogovf90.b4a.run',
+	LIMIT_ITEMS:10
+};
+
 const AxiosAPI = axios.create({
 	baseURL:'http://localhost:3333',		
 });
 
 AxiosAPI.interceptors.response.use(
 	response => response,
-	error => {				
-		switch (error.message) {
+	err => {
+		let error = new Error('Ocorreu um erro, tente novamente mais tarde');
+				
+		switch (err.message) {
 			case 'Network Error':
-				throw new Error('Error de conexão, tente novamente mais tarde.');			
+				error = new Error('Error de conexão, tente novamente mais tarde.');
+				break;		
 		
 			default:
-				if (error.response.data.errors.default)	{	
-							
-					throw new Error(error.response.data.errors.default);
-				} else 	
-					throw new Error('Ocorreu um erro, tente novamente mais tarde');				
+				if (err.response.data.errors.default)						
+					error = new Error(err.response.data.errors.default);				
+				break;			
 		}
+
+		return Promise.reject(error);
 	}
 );
 

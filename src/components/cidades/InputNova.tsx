@@ -5,8 +5,8 @@ import { useCidadesContext } from '@/contexts/cidades';
 import { CancelButton, ConfirmButton } from '@/shared/buttons';
 import { OpenText } from '@/shared/components';
 import { InputNameCity } from '@/shared/inputs';
-import { useAppSelector } from '@/store/Hooks';
-import { ICidade } from '@/models/Cidade';
+import { useAppSelector } from '@/shared/hooks/redux';
+import { ICidade } from '@/models';
 import { selectCidadesStatus } from '@/store/selectors/CidadesSelector';
 
 interface IProps {

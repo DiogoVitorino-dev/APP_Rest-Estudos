@@ -7,8 +7,8 @@ import { StyledView, OpenText, View, Button, LinkText } from '@/shared/component
 import { ENamesPages } from '@/constants/ENamesPages';
 import { useSignInContext } from '@/contexts/auth';
 import { InputEmail, InputPassword } from '../../shared/inputs';
-import { useAppSelector } from '@/store/Hooks';
-import { IUsuarioSignIn } from '@/models/Usuario';
+import { useAppSelector } from '@/shared/hooks/redux';
+import { IUsuarioSignIn } from '@/models';
 import { selectAuthStatus } from '@/store/selectors/AuthSelector';
 
 interface IProps {

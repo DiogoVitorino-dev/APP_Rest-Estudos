@@ -1,7 +1,7 @@
 import { getValueSafety } from '@/shared/services/secureStorage';
-import { AxiosAPI } from '../axios/config';
+import { AxiosAPI, RequestConfig } from '../axios/config';
 import { GenericEnum } from '@/constants/GenericEnum';
-import { ICidade } from '@/models/Cidade';
+import { ICidade } from '@/models';
 
 interface IGetProps {
 	page?:number
@@ -18,7 +18,7 @@ export const getAll = async ({page,filter}:IGetProps):Promise<IGetResponse> => {
 		headers:{
 			Authorization:`Bearer ${await getValueSafety(GenericEnum.secureKeyToken)}`
 		},
-		params:{page,filter}
+		params:{page,filter,limit:RequestConfig.LIMIT_ITEMS}
 	});
 	
 
@@ -26,5 +26,5 @@ export const getAll = async ({page,filter}:IGetProps):Promise<IGetResponse> => {
 		return {data,xTotalCount:headers['x-total-count']};
 	}
 
-	throw 'Error ao consultar as cidades';
+	return Promise.reject(new Error('Error ao consultar as cidades'));
 };

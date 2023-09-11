@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { useCidadesContext } from '@/contexts/cidades';
 import { ModalError, SimpleModal, View } from '@/shared/components';
-import { useAppDispatch, useAppSelector } from '@/store/Hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { cleanCidadesError } from '@/store/slices/CidadesSlice';
 import { createCidade } from '@/store/thunks/CidadesThunks';
 import { useTheme } from '@react-navigation/native';

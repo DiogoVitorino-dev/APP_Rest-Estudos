@@ -1,4 +1,4 @@
-import { ICidade } from '@/models/Cidade';
+import { ICidade } from '@/models';
 import { CidadesService } from '@/shared/api/cidades';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '..';

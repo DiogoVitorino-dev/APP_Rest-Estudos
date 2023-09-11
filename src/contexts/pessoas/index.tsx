@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 import * as yup from 'yup';
-import { IPessoa } from '@/models/Pessoa';
+import { IPessoa } from '@/models';
 import { ValidationYup } from '@/shared/services/validation/yup';
 
 type TOmitIPessoa = Omit<IPessoa, 'id'>

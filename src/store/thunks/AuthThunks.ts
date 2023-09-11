@@ -1,4 +1,4 @@
-import { IUsuario, IUsuarioSignIn, IUsuarioSignUp } from '@/models/Usuario';
+import { IUsuario, IUsuarioSignIn, IUsuarioSignUp } from '@/models';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '..';
 import { AuthService } from '@/shared/api/auth';

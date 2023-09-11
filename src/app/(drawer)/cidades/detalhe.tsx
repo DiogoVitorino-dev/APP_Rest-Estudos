@@ -4,14 +4,14 @@ import { StyleSheet } from 'react-native';
 import { InputDetalhe } from '@/components/cidades';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { ModalError, SimpleModal, View } from '@/shared/components';
-import { useAppDispatch, useAppSelector } from '@/store/Hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { cleanCidadesError } from '@/store/slices/CidadesSlice';
 import { updateCidade } from '@/store/thunks/CidadesThunks';
 import { useTheme } from '@react-navigation/native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCidadesContext } from '@/contexts/cidades';
 import { selectCidadesError } from '@/store/selectors/CidadesSelector';
-import { ICidade } from '@/models/Cidade';
+import { ICidade } from '@/models';
 
 export default function Detalhe() {		
 	const [errorModalVisible,setErrorModalVisible] = useState<boolean>(false);

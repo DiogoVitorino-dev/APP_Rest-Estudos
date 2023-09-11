@@ -6,7 +6,7 @@ import { useLayoutEffect } from 'react';
 import { PessoasProvider } from '@/contexts/pessoas';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { HeaderLeft } from '@/shared/components';
-import { useAppDispatch } from '@/store/Hooks';
+import { useAppDispatch } from '@/shared/hooks/redux';
 import { filterPessoas } from '@/store/thunks/PessoasThunks';
 
 export default function PessoasLayout() {	

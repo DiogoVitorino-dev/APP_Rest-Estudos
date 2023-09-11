@@ -1,4 +1,4 @@
-import { ICidade } from '@/models/Cidade';
+import { ICidade } from '@/models';
 import { createSlice, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
 import { createCidade, deleteCidade, fetchCidades, fetchNextPage, filterCidades, updateCidade } from '../thunks/CidadesThunks';
 

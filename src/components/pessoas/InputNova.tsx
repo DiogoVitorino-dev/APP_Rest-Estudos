@@ -11,7 +11,7 @@ import {
 import { CancelButton, ConfirmButton } from '@/shared/buttons';
 import { OpenText } from '@/shared/components';
 import { InputNameCity } from '@/shared/inputs';
-import { useAppDispatch, useAppSelector } from '@/store/Hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { usePessoasContext } from '@/contexts/pessoas';
 import { InputEmail } from '@/shared/inputs';
 import { fetchNextPage, filterCidades } from '@/store/thunks/CidadesThunks';

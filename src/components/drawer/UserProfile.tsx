@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Button, MaterialIcon, OpenText, View } from '@/shared/components';
 import Colors from '@/constants/Colors';
 import { useTheme } from '@react-navigation/native';
-import { useAppDispatch, useAppSelector } from '@/store/Hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { signOut } from '@/store/thunks/AuthThunks';
 import { selectAuthStatus, selectUsuario } from '@/store/selectors/AuthSelector';
 

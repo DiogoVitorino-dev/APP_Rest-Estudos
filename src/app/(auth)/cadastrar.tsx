@@ -3,9 +3,9 @@ import { StyleSheet } from 'react-native';
 
 import { SignUp } from '@/components/auth';
 import { ModalError, View } from '@/shared/components';
-import { useAppDispatch, useAppSelector } from '@/store/Hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { signIn, signUp } from '@/store/thunks/AuthThunks';
-import { IUsuarioSignUp } from '@/models/Usuario';
+import { IUsuarioSignUp } from '@/models';
 import { SignUpProvider } from '@/contexts/auth';
 import { selectAuthError } from '@/store/selectors/AuthSelector';
 import { cleanAuthError } from '@/store/slices/AuthSlice';

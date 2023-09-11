@@ -4,9 +4,9 @@ import { StyleSheet } from 'react-native';
 
 import { List } from '@/components/cidades';
 import { ENamesPages } from '@/constants/ENamesPages';
-import { ICidade } from '@/models/Cidade';
+import { ICidade } from '@/models';
 import { ModalError, View, ConfirmationModal } from '@/shared/components';
-import { useAppDispatch, useAppSelector } from '@/store/Hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { cleanCidadesError } from '@/store/slices/CidadesSlice';
 import { deleteCidade, fetchCidades } from '@/store/thunks/CidadesThunks';
 import { selectCidades, selectCidadesError, selectCidadesFilter } from '@/store/selectors/CidadesSelector';

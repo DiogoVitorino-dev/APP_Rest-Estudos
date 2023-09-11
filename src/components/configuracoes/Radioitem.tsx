@@ -21,16 +21,21 @@ export function RadioItem({onValueChange}:IProps) {
 				<RadioButton.Item 
 					label='Claro' 
 					value='light'
+					disabled
+					labelStyle={{color:Colors[theme.dark ? 'dark' : 'light'].text}}
 					color={Colors[theme.dark ? 'dark' : 'light'].tint}
 				/>
 				<RadioButton.Item 
 					label='Escuro' 
-					value='dark' 
+					value='dark'
+					disabled
+					labelStyle={{color:Colors[theme.dark ? 'dark' : 'light'].text}}
 					color={Colors[theme.dark ? 'dark' : 'light'].tint}
 				/>
 				<RadioButton.Item 
 					label='Padrão do sistema' 
-					value='sys' 
+					value='sys'
+					labelStyle={{color:Colors[theme.dark ? 'dark' : 'light'].text}}
 					color={Colors[theme.dark ? 'dark' : 'light'].tint}
 				/>
 			</RadioButton.Group>	

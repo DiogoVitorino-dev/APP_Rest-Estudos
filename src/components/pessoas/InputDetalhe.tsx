@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { OpenText, View } from '@/shared/components';
 import { InputEmail, InputNameCity } from '@/shared/inputs';
 import { CancelButton, ConfirmButton } from '@/shared/buttons';
-import { useAppDispatch, useAppSelector } from '@/store/Hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { usePessoasContext } from '@/contexts/pessoas';
 import { useTheme } from '@react-navigation/native';
 import { TAutocompleteDropdownItem,AutocompleteDropdown, AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown';

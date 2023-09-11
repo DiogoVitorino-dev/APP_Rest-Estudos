@@ -1,5 +1,4 @@
 import { useCallback, useEffect } from 'react';
-import { useColorScheme } from 'react-native';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Slot, useRouter, useSegments } from 'expo-router';
 import { PaperProvider } from 'react-native-paper';
@@ -8,16 +7,17 @@ import { getValueSafety } from '@/shared/services/secureStorage';
 import { GenericEnum } from '@/constants/GenericEnum';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { TokenExpired } from '@/shared/services/validation/jwt';
-import { useAppDispatch, useAppSelector } from '@/store/Hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { recoverySaved } from '@/store/thunks/AuthThunks';
 import { fetchCidades } from '@/store/thunks/CidadesThunks';
 import { fetchPessoas } from '@/store/thunks/PessoasThunks';
 import { selectAuthStatus, selectUsuario } from '@/store/selectors/AuthSelector';
 import { selectCidadesTotalCount } from '@/store/selectors/CidadesSelector';
 import { selectPessoasTotalCount } from '@/store/selectors/PessoasSelector';
+import { useColorScheme } from 'react-native';
 
 export default function RootLayoutNav(){
-	const colorScheme = useColorScheme();
+	const colorscheme = useColorScheme();
 	const segments = useSegments();
 	const router = useRouter();
 
@@ -63,7 +63,7 @@ export default function RootLayoutNav(){
 	},[segments,router,usuario]);
 
 	return (
-		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>			
+		<ThemeProvider value={colorscheme === 'dark' ? DarkTheme : DefaultTheme}>			
 			<PaperProvider>
 				<Slot />
 			</PaperProvider>			

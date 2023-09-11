@@ -4,7 +4,7 @@ import { AxiosAPI } from '../axios/config';
 import { GenericEnum } from '@/constants/GenericEnum';
 import { StatusCodes } from 'http-status-codes';
 
-export const updateById = async (pessoa:IPessoa) => {	
+export const updateById = async (pessoa:IPessoa):Promise<void> => {	
 	const {status} = await AxiosAPI.put(`/pessoas/${pessoa.id}`,{...pessoa},{
 		headers:{
 			Authorization:`Bearer ${await getValueSafety(GenericEnum.secureKeyToken)}`
@@ -13,5 +13,5 @@ export const updateById = async (pessoa:IPessoa) => {
 
 	if (status === StatusCodes.NO_CONTENT) return;
 
-	throw 'Error ao atualizar o registro';	
+	return Promise.reject(new Error('Error ao atualizar o registro'));
 };

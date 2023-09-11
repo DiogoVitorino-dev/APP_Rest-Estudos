@@ -12,5 +12,5 @@ export const create = async (pessoa:Omit<IPessoa, 'id'>):Promise<IPessoa> => {
 
 	if (data) return {...pessoa,id:data};
 
-	throw 'Error ao criar o registro';	
+	return Promise.reject(new Error('Error ao criar o registro'));
 };

@@ -1,5 +1,5 @@
 import Colors from '@/constants/Colors';
-import { ICidade } from '@/models/Cidade';
+import { ICidade } from '@/models';
 import { IconButton } from '@/shared/buttons';
 import { OpenText, View } from '@/shared/components';
 

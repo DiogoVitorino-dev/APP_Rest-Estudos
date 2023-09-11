@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { InputDetalhe } from '@/components/pessoas';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { ModalError, SimpleModal, View } from '@/shared/components';
-import { useAppDispatch, useAppSelector } from '@/store/Hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { cleanPessoasError } from '@/store/slices/PessoasSlice';
 import { updatePessoa } from '@/store/thunks/PessoasThunks';
 import { useTheme } from '@react-navigation/native';

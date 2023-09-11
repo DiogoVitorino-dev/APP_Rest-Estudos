@@ -3,8 +3,8 @@ import { StyleSheet, FlatList } from 'react-native';
 import { HeaderList } from './HeaderList';
 import { EmptyListFeedback, View } from '@/shared/components';
 import { ListItem } from './ListItem';
-import { IPessoa } from '@/models/Pessoa';
-import { useAppDispatch, useAppSelector } from '@/store/Hooks';
+import { IPessoa } from '@/models';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { fetchNextPage } from '@/store/thunks/PessoasThunks';
 import { selectPessoas, selectPessoasStatus } from '@/store/selectors/PessoasSelector';
 

@@ -3,10 +3,10 @@ import { StyleSheet } from 'react-native';
 
 import { SignIn } from '@/components/auth';
 import { ModalError, View } from '@/shared/components';
-import { useAppDispatch, useAppSelector } from '@/store/Hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/redux';
 import { cleanAuthError } from '@/store/slices/AuthSlice';
 import { signIn } from '@/store/thunks/AuthThunks';
-import { IUsuarioSignIn } from '@/models/Usuario';
+import { IUsuarioSignIn } from '@/models';
 import { SignInProvider } from '@/contexts/auth';
 import { selectAuthError } from '@/store/selectors/AuthSelector';
 

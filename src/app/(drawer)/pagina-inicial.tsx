@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import TotalInfo from '@/components/pagina-inicial/TotalInfo';
-import { useAppSelector } from '@/store/Hooks';
+import { useAppSelector } from '@/shared/hooks/redux';
 import { selectCidadesTotalCount } from '@/store/selectors/CidadesSelector';
 import { selectPessoasTotalCount } from '@/store/selectors/PessoasSelector';
 

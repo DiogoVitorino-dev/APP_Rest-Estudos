@@ -12,5 +12,5 @@ export const deleteById = async (id:number):Promise<void> => {
 
 	if (status === StatusCodes.NO_CONTENT) return;
 
-	throw 'Error ao remover';	
+	return Promise.reject(new Error('Error ao remover a cidade'));
 };

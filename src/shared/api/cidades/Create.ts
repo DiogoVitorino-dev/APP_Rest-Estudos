@@ -1,7 +1,7 @@
 import { getValueSafety } from '@/shared/services/secureStorage';
 import { AxiosAPI } from '../axios/config';
 import { GenericEnum } from '@/constants/GenericEnum';
-import { ICidade } from '@/models/Cidade';
+import { ICidade } from '@/models';
 
 export const create = async (cidade:Omit<ICidade, 'id'>):Promise<ICidade> => {
 	const {data} = await AxiosAPI.post('/cidades',{nome:cidade.nome},{
@@ -11,6 +11,6 @@ export const create = async (cidade:Omit<ICidade, 'id'>):Promise<ICidade> => {
 	});
 
 	if (data) return {id:data,nome:cidade.nome};
-
-	throw 'Error ao criar a cidade';	
+	
+	return Promise.reject(new Error('Error ao criar a cidade'));
 };

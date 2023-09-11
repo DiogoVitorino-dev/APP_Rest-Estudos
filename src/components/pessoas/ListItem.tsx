@@ -1,7 +1,7 @@
 
 import Colors from '@/constants/Colors';
 import { StyleSheet } from 'react-native';
-import { IPessoa } from '@/models/Pessoa';
+import { IPessoa } from '@/models';
 import { IconButton } from '@/shared/buttons';
 import { MaterialIcon, OpenText, View } from '@/shared/components';
 

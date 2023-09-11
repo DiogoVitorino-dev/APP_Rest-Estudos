@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import { ENamesPages } from '@/constants/ENamesPages';
 import { IconButton } from '@/shared/buttons';
 import { OpenText, View } from '@/shared/components';
-import { useAppDispatch } from '@/store/Hooks';
+import { useAppDispatch } from '@/shared/hooks/redux';
 import { refreshPessoas } from '@/store/slices/PessoasSlice';
 import { useRouter } from 'expo-router';
 

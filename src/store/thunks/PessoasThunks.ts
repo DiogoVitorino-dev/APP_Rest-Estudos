@@ -1,4 +1,4 @@
-import { IPessoa } from '@/models/Pessoa';
+import { IPessoa } from '@/models';
 import { PessoasService } from '@/shared/api/pessoas';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '..';
