@@ -1,12 +1,7 @@
 import axios from 'axios';
 
-export const RequestConfig = {
-	BASE_URL:'https://apirestestudos-diogovf90.b4a.run',
-	LIMIT_ITEMS:10
-};
-
 const AxiosAPI = axios.create({
-	baseURL:'http://localhost:3333',		
+	baseURL:process.env.BASE_URL,		
 });
 
 AxiosAPI.interceptors.response.use(
